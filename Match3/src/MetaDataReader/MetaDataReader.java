@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.Scanner;
 
@@ -22,10 +21,10 @@ public class MetaDataReader implements IMetaDataReader {
 	///<summary>
 	public void readData(String _metaDataLocation) throws IOException
 	{
-      try
+          try
 	  {
 	    file = new File(_metaDataLocation);
-        reader = new FileReader(file);
+            reader = new FileReader(file);
 	    bReader = new BufferedReader(reader);
 	    description = null;
 	    type = null;
@@ -79,22 +78,22 @@ public class MetaDataReader implements IMetaDataReader {
 	/// Pushes all objects in the array to the lowest possible index
 	///<summary>
 	public void sort()
-    {
-     for (int i = 0; i < TextureDataArray.length; i++)
-     {
-      if (TextureDataArray[i] == null)
-      {  
-       for (int k = i+1; k < TextureDataArray.length; k++)
+       {
+        for (int i = 0; i < TextureDataArray.length; i++)
         {
-         if (TextureDataArray[k] != null)
-          {
+          if (TextureDataArray[i] == null)
+          {  
+           for (int k = i+1; k < TextureDataArray.length; k++)
+           {
+            if (TextureDataArray[k] != null)
+           {
         	TextureDataArray[i] = TextureDataArray[k];
           	TextureDataArray[k] = null;
           }
+         }
         }
        }
       }
-    }
 	
 	///<summary>
 	/// Lists all contents in a given Directory
