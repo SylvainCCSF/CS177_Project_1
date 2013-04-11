@@ -1,0 +1,49 @@
+<! Tutorial Applet' >
+
+<HTML>
+
+<HEAD>
+	<TITLE> K1 </TITLE>
+</HEAD>
+
+<BODY>
+	<CENTER>
+		<H2>
+		This is a generic HTML page to host the applet
+		</H2>
+	</CENTER>
+
+	<H4>
+		<HR>
+		Author: Christopher Stenqvist    <BR>
+		<HR>
+
+				<applet code="org.lwjgl.util.applet.AppletLoader" 
+						archive="lwjgl_util_applet.jar" 
+						codebase="." 
+						width="600" height="800">
+ 
+				<param name="al_title" value="myslickgamesTutorialApplet"> 
+				
+				<param name="al_main" value="org.newdawn.slick.AppletGameContainer"> 
+				<param name="game" value="Main.TutorialApplet">
+				
+ 
+				<param name="al_jars" value="TutApplet.jar, jinput.jar, lwjgl.jar, slick.jar"> 
+ 
+				<param name="al_windows" value="windows_natives.jar"> 
+				<param name="al_linux" value="linux_natives.jar"> 
+				<param name="al_mac" value="macosx_natives.jar"> 
+ 
+                <param name="separate_jvm" value="true"> 
+				
+	alt="Your browser understands the &lt;APPLET&gt; tag but isn't running the applet, for some reason. Check to see if Java Browser Plugin is installed properly"
+Your browser is completely ignoring the &lt;APPLET&gt; tag!, Check to see if Java Browser Plugin is installed properly
+</applet>
+		
+		
+		<BR>
+		<HR>
+		<BR>
+</BODY>
+</HTML>
