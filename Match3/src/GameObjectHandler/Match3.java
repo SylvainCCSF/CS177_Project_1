@@ -53,6 +53,10 @@ public class Match3 extends Applet
 		while (CheckForMatches().size()>=1){
 			grid = BuildGrid();
 		}
+		
+		//****** Sylvain: 2013-04-10 ******
+		// Pre-load all sound effects
+		Sound.init();
 	}
 	
 	
@@ -130,6 +134,9 @@ public class Match3 extends Applet
 		
 		grid[a.x][a.y] = a;
 		grid[b.x][b.y] = b;
+		
+		//****** Sylvain: 2013-04-10 ******
+		Sound.SWAP.play();
 
 	}
 	
@@ -260,14 +267,20 @@ public class Match3 extends Applet
 			//first card
 			if (firstCard == null){
 				firstCard = clickCard;
+				//****** Sylvain: 2013-04-10 ******
+				Sound.SELECT.play();
 
 			//card too far away
 			}else if(!isAdjacent(firstCard,clickCard)){
 				firstCard = clickCard;
+				//****** Sylvain: 2013-04-10 ******
+				Sound.SELECT.play();
 			
 			//same card
 			}else if(firstCard == clickCard){
 				firstCard = null;
+				//****** Sylvain: 2013-04-10 ******
+				Sound.SELECT.play();
 			
 			//swap cards
 			}else if(isAdjacent(firstCard, clickCard)){
