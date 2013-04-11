@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.Scanner;
 
@@ -7,7 +8,8 @@ public class MetaDataReader implements IMetaDataReader {
 	private FileReader reader;
 	private BufferedReader bReader;
 	private File file;
-	private String description, location, type;
+	private String description, location, type, dummy;
+	private String[] splitArray;
 	
 	public MetaDataReader()
 	{
@@ -21,23 +23,29 @@ public class MetaDataReader implements IMetaDataReader {
 	///<summary>
 	public void readData(String _metaDataLocation) throws IOException
 	{
-          try
+      try
 	  {
 	    file = new File(_metaDataLocation);
-            reader = new FileReader(file);
+        reader = new FileReader(file);
 	    bReader = new BufferedReader(reader);
 	    description = null;
 	    type = null;
 	    location = null;
 	    
+	    splitArray = new String[3];
+	    dummy = "EMPTY_VALUE";
+	    
 	    //clear the first line
-	    description = bReader.readLine();
-	    assert( description != null);
+	    dummy = bReader.readLine();
+	    assert( dummy != null);
 	   
-	    while(( description = bReader.readLine() ) != null )
+	    while(( dummy = bReader.readLine() ) != null )
 	    {
-		  location = bReader.readLine();
-		  type = bReader.readLine();
+	    	splitArray = dummy.split(", ");
+	      
+	      description = splitArray[0];
+		  location = splitArray[1];
+		  type = splitArray[2];
 		  
 		  add(type, description, location);
 		
@@ -45,8 +53,12 @@ public class MetaDataReader implements IMetaDataReader {
 	  }catch(Exception e){}
 	  finally 
       { 
-		 if(description != null)
+		 if(dummy != null)
+		 {
 	     bReader.close();
+		 splitArray = null;
+		 dummy = null;
+		 }
 	   }
 	}
 	
@@ -78,22 +90,22 @@ public class MetaDataReader implements IMetaDataReader {
 	/// Pushes all objects in the array to the lowest possible index
 	///<summary>
 	public void sort()
-       {
-        for (int i = 0; i < TextureDataArray.length; i++)
+    {
+     for (int i = 0; i < TextureDataArray.length; i++)
+     {
+      if (TextureDataArray[i] == null)
+      {  
+       for (int k = i+1; k < TextureDataArray.length; k++)
         {
-          if (TextureDataArray[i] == null)
-          {  
-           for (int k = i+1; k < TextureDataArray.length; k++)
-           {
-            if (TextureDataArray[k] != null)
-           {
+         if (TextureDataArray[k] != null)
+          {
         	TextureDataArray[i] = TextureDataArray[k];
           	TextureDataArray[k] = null;
           }
-         }
         }
        }
       }
+    }
 	
 	///<summary>
 	/// Lists all contents in a given Directory
@@ -145,9 +157,8 @@ public class MetaDataReader implements IMetaDataReader {
 		{
 			if(TextureDataArray[i] != null)
 			{
-			System.out.println(TextureDataArray[i].getDescription());
-			System.out.println(TextureDataArray[i].getLocation());
-			System.out.println(TextureDataArray[i].getType());
+			System.out.println(TextureDataArray[i].getDescription() + ", " + TextureDataArray[i].getLocation() + ", " + TextureDataArray[i].getType());
+		
 			}
 		}
 	}
