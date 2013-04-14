@@ -169,7 +169,6 @@ public class MetaDataReader implements IMetaDataReader {
 			if(TextureDataArray[i] != null)
 			{
 			System.out.println(TextureDataArray[i].getDescription());
-			System.out.println("ENTITY NUMBER: " + i);
 			}
 		}
 	}
@@ -180,7 +179,6 @@ public class MetaDataReader implements IMetaDataReader {
 			if(TextureDataArray[i] != null)
 			{
 			System.out.println(TextureDataArray[i].getLocation());
-			System.out.println("ENTITY NUMBER: " + i);
 			}
 		}
 	}
@@ -191,7 +189,6 @@ public class MetaDataReader implements IMetaDataReader {
 			if(TextureDataArray[i] != null)
 			{
 			System.out.println(TextureDataArray[i].getType());
-			System.out.println("ENTITY NUMBER: " + i);
 			}
 		}
 	}
@@ -199,9 +196,32 @@ public class MetaDataReader implements IMetaDataReader {
 	///<summary>
 	///Mutators
 	///<summary>
-	public String getTypeAt(int _index){return TextureDataArray[_index].getType();}
-	public String getDescriptionAt(int _index){return TextureDataArray[_index].getDescription();}
-	public String getFileLocationAt(int _index){return TextureDataArray[_index].getLocation();}
+	public String getTypeAt(int _index){
+		if(TextureDataArray[_index] != null)
+		    return TextureDataArray[_index].getType();
+		else
+			return "null";
+	}
+	public String getDescriptionAt(int _index){
+		if(TextureDataArray[_index] != null)
+		    return TextureDataArray[_index].getDescription();
+		else
+			return "null";
+	}
+	public String getFileLocationAt(int _index){
+		if(TextureDataArray[_index] != null)
+		    return TextureDataArray[_index].getLocation();
+		else
+			return "null";
+	}
+	public String getUsableFileLocationAt(int _index)
+	{
+		if(TextureDataArray[_index] != null)
+		    return TextureDataArray[_index].getDoubleSlashLocation();
+		else
+			return "null";
+	}
+	
 	public void setTypeAt(int _index, String _type){TextureDataArray[_index].setType(_type);}
 	public void setDescriptionAt(int _index, String _description){TextureDataArray[_index].setDescription(_description);}
 	public void setLocationAt(int _index, String _location){TextureDataArray[_index].setLocation(_location);}
