@@ -1,4 +1,6 @@
-import java.io.IOException;
+package MetaDataReader;
+
+ import java.io.IOException;
 
 
 public interface IMetaDataReader {

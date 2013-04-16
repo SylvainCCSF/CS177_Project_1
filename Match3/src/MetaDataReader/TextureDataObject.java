@@ -1,4 +1,4 @@
-
+package MetaDataReader;
 	///<summary>
 	///Holds parsed meta data
 	///<summary>
@@ -12,7 +12,6 @@ public class TextureDataObject {
 		this.type = _type;
 		this.description = _description;
 		this.location = _location;
-		
 		
 		if(location != null)
 		{

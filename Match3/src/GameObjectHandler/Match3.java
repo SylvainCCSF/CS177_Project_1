@@ -75,6 +75,7 @@ public class Match3 extends Applet
 		return grid;
 	}
 
+	//removes matches
 	public void FindAndRemoveMatches(){
 		ArrayList<ArrayList> matches = CheckForMatches();
 		for(int i =0; i<matches.size(); i++){
@@ -91,13 +92,13 @@ public class Match3 extends Applet
 		AddNewPieces();
 		
 	}
-	
+	//resets grid
 	public void AddNewPieces(){
 		
 		for(int i=0; i<gridSize;i++){
 			for(int j=0; j<gridSize;j++){
 				
-				if (grid[i][j] ==null ){
+				if (grid[i][j] == null ){
 					int imageIndex = (int)(Math.random()*numImages);
 					grid[i][j] = new Card(i,j,imageIndex);
 
