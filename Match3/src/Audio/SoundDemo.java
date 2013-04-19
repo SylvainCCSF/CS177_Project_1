@@ -1,3 +1,5 @@
+package Audio;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -7,8 +9,8 @@ import javax.swing.JFrame;
 public class SoundDemo extends JFrame {
 
 	public SoundDemo() {
-		Sound.init();
-		Sound.volume = Sound.Volume.ON;
+		SoundEffect.init();
+		SoundEffect.volume = SoundEffect.Volume.ON;
 
 		// Set up UI components
 		Container cp = this.getContentPane();
@@ -16,7 +18,7 @@ public class SoundDemo extends JFrame {
 		JButton btnSound1 = new JButton("Select");
 		btnSound1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Sound.SELECT.play();
+				SoundEffect.SELECT.play();
 			}
 		});
 		cp.add(btnSound1);
@@ -24,13 +26,13 @@ public class SoundDemo extends JFrame {
 		JButton btnSound2 = new JButton("Swap");
 		btnSound2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Sound.SWAP.play();
+				SoundEffect.SWAP.play();
 			}
 		});
 		cp.add(btnSound2);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setTitle("Test Sound");
+		this.setTitle("Test SoundEffect");
 		this.pack();
 		this.setVisible(true);
 	}
