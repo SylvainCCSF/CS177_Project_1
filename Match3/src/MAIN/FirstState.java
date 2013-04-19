@@ -6,22 +6,21 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
 import GameObjectHandler.CardHandler;
 
 
 
 public class FirstState extends BasicGameState {
 
-	   public static final int ID = 0;
+	   public static final int ID = 1;
 	   public final int WIDTH, HEIGHT;
 	   private CardHandler CH;
-	   
 	   
 	   public FirstState(int width, int height)
 	   {
 		   WIDTH = width;
 		   HEIGHT = height;
+		   CH = new CardHandler();
 	   }
 	   
 	   
@@ -34,14 +33,15 @@ public class FirstState extends BasicGameState {
 	    @Override //initialize the logic
 	     public void init( GameContainer container, StateBasedGame game ) throws SlickException
 	     {
-	    	CH = new CardHandler();
+	    	CH.init();
 	     } 
 	    
 	    
 	     @Override // update the cardHandler -> cardHandler.update() pls keep this method as clean as possible
 	     public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
 	     {
-	    	 CH.update(container, game, delta);
+	    	 //Update the CardHandler
+	    	CH.update(container, game, delta);
 	     } 
 	    
 	     
@@ -56,7 +56,7 @@ public class FirstState extends BasicGameState {
 	                     10, 
 	                     25 ); 
 	     
-	     
+	        //Render the Card Handler
 	       CH.render(container, game, g);
 	       g.drawString("mouseX: " + Mouse.getX() + "\n MouseY: " + Mouse.getY(), 50,50 );
 	     }
