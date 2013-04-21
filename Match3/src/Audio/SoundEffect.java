@@ -94,9 +94,13 @@ public enum SoundEffect {
 			// Open audio clip and load samples from the audio input stream.
 			clip.open(audioInputStream);
 		} 
-		catch (UnsupportedAudioFileException 
-				 | IOException 
-				 | LineUnavailableException e) {
+		catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e){
+			e.printStackTrace();
+		}
+		catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
 	}

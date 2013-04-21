@@ -78,9 +78,13 @@ public enum SoundTrack {
 			
 
 		} 
-		catch (UnsupportedAudioFileException 
-				 | IOException 
-				 | LineUnavailableException e) {
+		catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e){
+			e.printStackTrace();
+		}
+		catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
 	}
