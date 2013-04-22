@@ -20,18 +20,27 @@ package GameObjectHandler;
 		/// be swapped out for an animation object}
 		///<summary>
 		
-		private byte rowIndex, columnIndex, cardType;
+		int x, y, cardType;
+		double drawX, drawY;
 		private Rectangle boundingRectangle;
 		
-		public Card(byte _rowIndex, byte _columnIndex, byte _cardType)
+		public Card(int _x, int _y, int _cardType)
 		{
-			rowIndex = _rowIndex;
-			columnIndex = _columnIndex;
+			x = _x;
+			y = _y;
+			drawX = (double)_x;
+			drawY = (double)_y;
 			cardType = _cardType;
-			boundingRectangle = new Rectangle( rowIndex * 50, columnIndex * 50, 50, 50);
+			boundingRectangle = new Rectangle( y * 50, x * 50, 50, 50);
 		}
-		
-		public byte getCardType(){return cardType;}		
+		public Card clone(){
+			
+			Card newCard = new Card(this.x, this.y, this.cardType);
+			
+			return newCard;
+		}
+				
+		public int getCardType(){return cardType;}		
 		public Rectangle getBoundingRectangle(){ return boundingRectangle;}
 		public void setCardType(byte _value){cardType = _value;}
 		public void setBoundingRectangle(Rectangle _value){ boundingRectangle = _value;}

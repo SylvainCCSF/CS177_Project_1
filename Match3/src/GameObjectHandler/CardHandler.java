@@ -1,9 +1,7 @@
 package GameObjectHandler;
-
-
+import java.awt.*;
+import java.util.ArrayList;
 import java.awt.Point;
-import java.util.LinkedList;
-
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.GameContainer;
@@ -21,167 +19,360 @@ import org.newdawn.slick.state.StateBasedGame;
 //////////////////////////////////////////////////////
 
 public class CardHandler {
+	private final int APPLET_WIDTH = 800; // width of the applet panel
+	private final int APPLET_HEIGHT = 800; // height of the applet panel
 	
-   
-	private LinkedList<Point> indexList;
-	private Card[][] board;
-	private byte rowSize = 12, columnSize = 16;
-	private Rectangle mouseRectangle;
+	private Point clickPoint = null; 
+	//private Button debugButton; // for debugging
+	static int cardSize = 50;
+	static int offsetX = 120;
+	static int offsetY = 120;
+	static int gridSize = 8;
+	static int maxX = gridSize*cardSize+offsetX;
+	static int maxY = gridSize*cardSize+offsetY;
+	private boolean isRunning = true;
+	private boolean isSwapping = false;
+	private boolean isDropping = false;
+	private boolean madeMove = false;
+	double gDeltaTime = 0;
+	double moveRate = 5;
+	Card firstCard;
+	boolean updateGrid=false;
+	int numImages = 6;
+	//Color[] images;
+	Card[][] grid;
+
+
 	private int mouseX, mouseY;
-	private boolean previousClick = false;
+
 	private boolean currentClick = false;
-	private Image[] image;
-	
-	///<summary>
-	///Constructor instantiates the board and mouse Rect
-	///<summary>
-	
-	public CardHandler()
-	{
-		board = new Card[rowSize][columnSize];
-		indexList = new LinkedList();
-		mouseRectangle = new Rectangle(0,0, 2, 2);
-		fillBoard();
-		image = new Image[7];
+	private Image[] images;
+
+	//constructor
+	public CardHandler() {
 	}
-	
-	///<summary>
-	///fills an image array of images named {0-6}
-	///<summary>
-	public void init()
-	{
-		for(byte i = 0; i < image.length; i++)
-		{
-			try {
-				image[i] = new Image("Content/ImageFiles/" + i + ".png");
-			} catch (SlickException e) {e.printStackTrace();}
+
+	//init
+	public void init() {
+		images = new Image[numImages];
+		
+		grid = BuildGrid();
+		while (CheckForMatches().size()>=1){
+			grid = BuildGrid();
 		}
-	}
-	///<summary>
-	/// Randomly assigns an imageType(byte) 
-	/// to every card in the Board[][] array
-	///<summary>
-	
-	public void fillBoard()
-	{
-		byte imageType;
-		for(byte i = 0; i < rowSize; i++)
-		{
-			for(byte k = 0; k < columnSize; k++)
-			{
-				imageType = (byte)(Math.random()*6);
-				board[i][k] = new Card(i,k, imageType);
+		
+		for (int i = 0; i < images.length; i++) {
+			try {
+				images[i] = new Image("Content/ImageFiles/" + i + ".png");
+			} catch (SlickException e) {
+				e.printStackTrace();
 			}
 		}
 	}
-	
-	///<summary>
-    /// Takes in the Mouse pos, 
-	/// Resets the currentClicked & prevClicked booleans,
-	/// Cycles through Board[][] checking for mouseIntersection + isClicked,
-	/// Calls the recursive check(),
-	/// Clears any and all matches.
-	///<summary>
-	
-	public void update(GameContainer container, StateBasedGame game, int delta ) throws SlickException
-	{
-		mouseX = Mouse.getX();
-		mouseY = 800 - Mouse.getY();
-		mouseRectangle.setBounds(mouseX, mouseY, 2, 2);
+
+
+	public void update(GameContainer container, StateBasedGame game, int delta)
+			throws SlickException {
 		
-		currentClick = Mouse.isButtonDown(0);
+		gDeltaTime = (double)delta/1000;
+		//System.out.println(gDeltaTime);
+		GetInput();
+		MovePieces();
 		
-		for(int i = 0; i < rowSize; i++)
-		{
-			for(int k = 0; k < columnSize; k++)
-			{
+
+	}
+
+	
+	public Card[][] BuildGrid(){
+		
+		Card[][] grid = new Card[gridSize][gridSize];
+		
+		for(int i=0; i<gridSize; i++){
+			for(int j=0; j<gridSize; j++){
+				int imageIndex = (int)(Math.random()*numImages);
+				grid[i][j] = new Card(i,j,imageIndex);
+
+			}
+		}
+		
+		return grid;
+	}
+	
+	public void FindAndRemoveMatches(){
+		ArrayList<ArrayList> matches = CheckForMatches();
+		for(int i =0; i<matches.size(); i++){
+			for( int j = 0; j<matches.get(i).size(); j++){
+				ArrayList<Card> match = matches.get(i);
+				Card a = match.get(j);
+				int x = a.x;
+				int y = a.y;
+				grid[a.x][a.y]=null;
+				DropDown(x, y);
+			}
+		}
+		
+		AddNewPieces();
+		
+	}
+	
+	
+	public void DropDown(int x, int y){
+	
+			for(int row = y-1; row>=0; row--){
+				if (grid[x][row] !=null ){
+					grid[x][row].y++;
+					grid[x][row+1] = grid[x][row];
+					grid[x][row] = null;
+				}
 				
-				if(currentClick && mouseRectangle.intersects(board[i][k].getBoundingRectangle()) && !previousClick)
-				{
-				    check(i, k, "null");
-					clearMatches();
+			}
+			
+	}
+
+	public void AddNewPieces(){
+		
+		for(int i=0; i<gridSize;i++){
+			int missingPieces = 1;
+			for(int j=gridSize-1; j>=0;j--){
+				
+				if (grid[i][j] ==null ){
+					int imageIndex = (int)(Math.random()*numImages);
+					Card newCard = new Card(i,j,imageIndex);
+					newCard.drawY = -missingPieces++;
+					//System.out.println("newcard.y "+newCard.y);
+					//System.out.println("i "+i+ " j "+j);
+					grid[i][j] = newCard;
+					isDropping=true;
+				}
+				
+			}
+		}
+	}
+
+	
+	public void MovePieces(){
+		madeMove=false;
+		for (int row = 0; row<gridSize; row++){
+			for(int col = 0; col<gridSize; col++){
+				if (grid[col][row] != null){
+					
+					Card card = grid[col][row];
+					
+						//close enough
+					if (Math.abs(card.drawY - row) <.1){
+						card.drawY = row;
+					}
+					if (Math.abs(card.drawX - col) <.1){
+						card.drawX = col;
+					}
+					
+						//move up
+					if (card.drawY > row){
+						card.drawY = card.drawY - moveRate*gDeltaTime;
+						System.out.println("up "+card.drawY + " row "+row);
+						madeMove=true;
+						
+						//move down
+					}else if (card.drawY < row){
+						System.out.println("down "+card.drawY + " row "+row);
+						card.drawY = card.drawY + moveRate*gDeltaTime;
+						System.out.println("down2 "+card.drawY + " row "+row);
+						madeMove=true;
+						
+						//move left
+					}else if (card.drawX < col){
+						card.drawX = card.drawX + moveRate*gDeltaTime;
+						madeMove=true;
+						
+						//move right
+					}else if (card.drawX < col){
+						card.drawX = card.drawX - moveRate*gDeltaTime;
+						madeMove=true;
+					}
+					
 				}
 			}
 		}
-		previousClick = currentClick;
-		currentClick = previousClick;
-	}
-	
-	///<summary>
-	/// Draws the card type of all cards
-	///<summary>
-	
-	public void render( GameContainer container, StateBasedGame game, Graphics g )
-	{
-		for(byte i = 0; i < rowSize; i++)
-		{
-			for(byte k = 0; k < columnSize; k++)
-			{
-				image[board[i][k].getCardType()].draw((int)board[i][k].getBoundingRectangle().getX(), (int)board[i][k].getBoundingRectangle().getY());
-			}
+		if(!madeMove){
+			FindAndRemoveMatches();
 		}
 	}
 	
-	///<summary>
-	/// Recursively checks for matches,
-	/// saves the index locations as a Point(x,y) in a Linked list,
-	/// check() up, down, left, right from current pos.
-	///<summary>
-	
-	public void check(int _x, int _y, String _comingFrom) throws SlickException
-	{
-		String comingFrom = _comingFrom;
-		int x = _x;
-		int y = _y;
+	public void SwapCards(Card a, Card b){
+		Card temp = a.clone();
+		a.x = b.x;
+		a.y = b.y;
 		
+		b.x = temp.x;
+		b.y = temp.y;
+		
+		grid[a.x][a.y] = a;
+		grid[b.x][b.y] = b;
+		System.out.println("swapping");
+	}
+	
+	
+	public void GetInput(){
 
-		if(x!= 0 && board[x][y].getCardType() == board[x-1][y].getCardType()  && !comingFrom.equalsIgnoreCase("right") && !indexList.contains(new Point(x-1, y)))
-		{   
-			indexList.add(new Point(x, y));
-			indexList.add(new Point(x-1, y));
-		    check( x-1 , y, "left");
-		}
-	  
-		if( x+1 < rowSize && board[x][y].getCardType() == board[x+1][y].getCardType() && !comingFrom.equalsIgnoreCase("left") && !indexList.contains(new Point(x+1, y)))
-		{
-			indexList.add(new Point(x, y));
-			indexList.add(new Point(x+1, y));
-			check(x+1, y, "right");
+		if (Mouse.isButtonDown(0) && currentClick==false){
+			mouseX = Mouse.getX();
+			mouseY = Mouse.getY();
+			mouseClicked(mouseX, mouseY);
+			System.out.println("x: "+mouseX + " y: "+mouseY);
+			currentClick=true;
+		}else if(!Mouse.isButtonDown(0)){
+			currentClick=false;
 		}
 		
-		if( y - 1 >= 0 && board[x][y].getCardType() == board[x][y-1].getCardType() && !comingFrom.equalsIgnoreCase("above") && !indexList.contains(new Point(x, y-1)))
-		{
-			indexList.add(new Point(x, y));
-	    	indexList.add(new Point(x, y-1));
-			check(x, y-1,"below");
-		}
 		
-			if( y+1 < columnSize && board[x][y].getCardType() == board[x][y+1].getCardType() && !comingFrom.equalsIgnoreCase("below") && !indexList.contains(new Point(x, y+1)))
-		{
-			indexList.add(new Point(x, y));
-			indexList.add(new Point(x, y+1));
-	    	check(x, y+1,"above");
-		}
 	}
 	
 	
-	///<summary>
-	/// If the Linked list holding the Board[][] indexes of 
-	/// currently selected matches is greater than 2 remove
-	/// them from the Board[][],
-	/// Clears the ArrayList for next selection.
-	///<summary>
 	
-	public void clearMatches() throws SlickException
-	{
-		if(indexList.size() > 3)
-		{
-			for(int i = 0; i < indexList.size(); i++)
-			{				
-			    board[indexList.get(i).x][indexList.get(i).y].setCardType((byte)6);
+	public void mouseClicked(int clickX, int clickY) {
+		clickY = APPLET_HEIGHT - clickY;
+		Point pnt = new Point(clickX, clickY);
+
+		Point selection = new Point();
+		Card clickCard;
+		if (pnt.x>offsetX && pnt.x<maxX && pnt.y>offsetY && pnt.y<maxY){
+			selection.x = (pnt.x-offsetX)/cardSize;
+			selection.y = (pnt.y-offsetY)/cardSize;
+			clickCard = grid[selection.x][selection.y];
+			
+			System.out.println("pnt x: " + pnt.x + " y: "+pnt.y);
+//			System.out.println("selection x: " + selection.x + " y: "+selection.y);
+//			System.out.println("clickCard x: " + clickCard.x + " y: "+clickCard.y);
+			//firstCard = grid[selection.x][selection.y];
+
+		}else{
+			return;
+		}
+		
+		//first card
+		if (firstCard == null){
+			firstCard = clickCard;
+
+		//card too far away
+		}else if(!isAdjacent(firstCard,clickCard)){
+			firstCard = clickCard;
+		
+		//same card
+		}else if(firstCard == clickCard){
+			firstCard = null;
+		
+		//swap cards
+		}else if(isAdjacent(firstCard, clickCard)){
+			
+			SwapCards(firstCard, clickCard);
+			
+			//make sure a match is performed
+			if(CheckForMatches().size()<1){
+				SwapCards(firstCard, clickCard);
+				firstCard = null;
+			//if there is a match
+			}else{
+				
+				firstCard = null;
+				FindAndRemoveMatches();
 			}
 		}
-		indexList.clear();
 	}
 	
+	public boolean isAdjacent(Card a, Card b){
+		
+		if (Math.abs(b.x - a.x) > 1){
+			return false;
+		}
+		
+		if (Math.abs(b.y - a.y) > 1){
+			return false;
+		}			
+		
+		return true;
+	}
+	
+	
+	public ArrayList CheckForMatches(){
+		ArrayList<ArrayList> matchList = new ArrayList();
+
+		//search horizontal
+		for (int row = 0; row<gridSize; row++){
+			for (int col = 0; col<gridSize-2; col++){
+				ArrayList<Card> match = getMatchHoriz(col, row);
+				if (match.size()>2){
+					matchList.add(match);
+					col += match.size() -1;
+				}
+			}
+		}
+		
+		//search vertical
+		for (int col = 0; col<gridSize; col++){
+			for (int row = 0; row<gridSize-2; row++){
+				ArrayList<Card> match = getMatchVert(col, row);
+				if (match.size()>2){
+					matchList.add(match);
+					row += match.size() -1;
+					
+				}
+			}
+		}		
+		
+			
+		return matchList;
+	}
+	
+	
+	public ArrayList getMatchHoriz(int col, int row){
+		ArrayList<Card> match = new ArrayList();
+
+		match.add(grid[col][row]);
+		for(int i=1; col+i<gridSize; i++){
+			if (grid[col][row].cardType == grid[col+i][row].cardType){
+				match.add(grid[col+i][row]);
+			}else{
+
+				return match;
+			}
+		}
+
+		return match;
+	}
+	
+	public ArrayList getMatchVert(int col, int row){
+		ArrayList<Card> match = new ArrayList();
+
+		match.add(grid[col][row]);
+		for(int i=1; row+i<gridSize; i++){
+			if (grid[col][row].cardType == grid[col][row+i].cardType){
+				match.add(grid[col][row+i]);
+			}else{
+
+				return match;
+			}
+		}
+		return match;
+	}	
+	
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
+		//draw grid
+		for (int i = 0; i < gridSize; i++) {
+			for (int j = 0; j < gridSize; j++) {
+				//images[grid[i][j].getCardType()].draw((cardSize)*i+offsetX, (cardSize)*j+offsetY);
+				Card card = grid[i][j];
+				Image image = images[card.getCardType()];
+				float y = (float)card.drawY;
+				//System.out.println("y "+y);
+				image.draw(card.x*cardSize+offsetX, y*cardSize+offsetY);
+
+			}
+		}
+		
+		//draw selection
+		if (firstCard != null){
+			//g.setColor(Color.magenta);
+			g.drawRect(firstCard.x*cardSize+offsetX, firstCard.y*cardSize+offsetY, cardSize, cardSize);
+		}
+	}
 }
