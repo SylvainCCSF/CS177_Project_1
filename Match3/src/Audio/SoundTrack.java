@@ -16,10 +16,12 @@ public enum SoundTrack {
 	// Add the files in the '/Content/SoundClips' directory
 	// than add the sound to the list following the syntax:
 	// TRACK_NAME("sound_file_name")
-TRACK_ONE("track1.wav");
+	TRACK_ONE("track1.wav"),
+	TRACK_TWO("track2.wav"),
+	TRACK_THREE("track3.wav");
 	
 	Music track; // clip that handle the track
-	public static float volume = 1.0f; // volume level
+	public static float volume = 0.4f; // volume level
 	private static boolean mute = false; // flag for mute status
 	public static float oldVolume; // to retrieve last vol level after mute
 
@@ -80,10 +82,20 @@ TRACK_ONE("track1.wav");
 	/**
 	 * Set the volume of the background music (not the general volume).
 	 * @param vol
+	 * @throws OutOfRangeException 
 	 */
-	public void setVolume(float vol) {
-		volume = vol;
-		track.setVolume(volume);
+	public void setVolume(float vol) throws OutOfRangeException {
+		// define exception
+		OutOfRangeException problem = 
+				new OutOfRangeException ("Input value is out of range " +
+		         			             "(should be between 0.0f and 1.0f)");
+		// define range for the volume
+		if (vol < 0.0f || vol > 1.0f)
+			throw problem;
+		else {
+			volume = vol;
+			track.setVolume(volume);
+		}
 	}
 	
 	/**
@@ -99,7 +111,12 @@ TRACK_ONE("track1.wav");
 			if (volume > 1.0f)
 				volume = 1.0f;
 			// set the volume for the current clip
-			setVolume(volume);
+			try {
+				setVolume(volume);
+			} catch (OutOfRangeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -116,7 +133,12 @@ TRACK_ONE("track1.wav");
 			if (volume < 0.0f)
 				volume = 0.0f;
 			// set the volume for the current clip
-			setVolume(volume);
+			try {
+				setVolume(volume);
+			} catch (OutOfRangeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -133,6 +155,12 @@ TRACK_ONE("track1.wav");
 			volume = oldVolume;
 			mute = false;
 		}
-		this.setVolume(volume);
+		
+		try {
+			this.setVolume(volume);
+		} catch (OutOfRangeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -6,27 +6,28 @@ import java.awt.event.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public class SoundDemo extends JFrame {
 
 	public SoundDemo() {
-		final SoundTrack backgroundMusic = SoundTrack.TRACK_ONE;
+		final SoundTrack backgroundMusic = SoundTrack.TRACK_TWO;
 		
 
 		// Set up UI components
 		Container cp = this.getContentPane();
 		cp.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-		JButton btnSound1 = new JButton("Select");
+		JButton btnSound1 = new JButton("sound1");
 		btnSound1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SoundEffect.SELECT.play();
+				SoundEffect.MENU_OPEN.play();
 			}
 		});
 		cp.add(btnSound1);
 		
-		JButton btnSound2 = new JButton("Swap");
+		JButton btnSound2 = new JButton("sound2");
 		btnSound2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SoundEffect.SWAP.play();
+				SoundEffect.MENU_CLOSE.play();
 			}
 		});
 		cp.add(btnSound2);
@@ -35,6 +36,12 @@ public class SoundDemo extends JFrame {
 		btnSound3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				backgroundMusic.play();
+				try {
+					backgroundMusic.setVolume(0.5f);
+				} catch (OutOfRangeException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		cp.add(btnSound3);

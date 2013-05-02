@@ -1,0 +1,7 @@
+.DS_Store
+.class
+*.class
+
+Match3/.classpath
+
+*.prefs

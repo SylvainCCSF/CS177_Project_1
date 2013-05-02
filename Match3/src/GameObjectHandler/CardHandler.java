@@ -1,4 +1,5 @@
 package GameObjectHandler;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.awt.Point;
@@ -11,12 +12,15 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
+import Audio.OutOfRangeException;
+import Audio.SoundEffect;
 //////////////////////////////////////////////////////
 /// This Object handles the card/Jewel
 /// logic and acts as a container for the 
 /// card/Jewels. It is called from the GameState's
 /// Update()/Render()/init() methods.
 //////////////////////////////////////////////////////
+import Audio.SoundTrack;
 
 public class CardHandler {
 	private final int APPLET_WIDTH = 800; // width of the applet panel
@@ -47,6 +51,9 @@ public class CardHandler {
 
 	private boolean currentClick = false;
 	private Image[] images;
+	
+	// for background music
+	final SoundTrack backgroundMusic = SoundTrack.TRACK_THREE;
 
 	//constructor
 	public CardHandler() {
@@ -67,6 +74,16 @@ public class CardHandler {
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		// launch the background music
+		try {
+			backgroundMusic.setVolume(0.3f);
+			backgroundMusic.play();
+			
+		} catch (OutOfRangeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -101,6 +118,8 @@ public class CardHandler {
 	public void FindAndRemoveMatches(){
 		ArrayList<ArrayList> matches = CheckForMatches();
 		for(int i =0; i<matches.size(); i++){
+			// play delete sound for each match3
+			SoundEffect.DELETE.play();
 			for( int j = 0; j<matches.get(i).size(); j++){
 				ArrayList<Card> match = matches.get(i);
 				Card a = match.get(j);
@@ -139,6 +158,7 @@ public class CardHandler {
 					int imageIndex = (int)(Math.random()*numImages);
 					Card newCard = new Card(i,j,imageIndex);
 					newCard.drawY = -missingPieces++;
+					SoundEffect.DROP.play();
 					//System.out.println("newcard.y "+newCard.y);
 					//System.out.println("i "+i+ " j "+j);
 					grid[i][j] = newCard;
@@ -208,6 +228,8 @@ public class CardHandler {
 		
 		grid[a.x][a.y] = a;
 		grid[b.x][b.y] = b;
+		
+		SoundEffect.SWAP.play();
 		System.out.println("swapping");
 	}
 	
@@ -252,14 +274,17 @@ public class CardHandler {
 		//first card
 		if (firstCard == null){
 			firstCard = clickCard;
+			SoundEffect.SELECT.play();
 
 		//card too far away
 		}else if(!isAdjacent(firstCard,clickCard)){
 			firstCard = clickCard;
+			SoundEffect.BAD.play();
 		
 		//same card
 		}else if(firstCard == clickCard){
 			firstCard = null;
+			SoundEffect.BAD.play();
 		
 		//swap cards
 		}else if(isAdjacent(firstCard, clickCard)){
