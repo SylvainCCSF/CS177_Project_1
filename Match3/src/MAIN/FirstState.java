@@ -59,6 +59,8 @@ public class FirstState extends BasicGameState {
 	        //Render the Card Handler
 	       CH.render(container, game, g);
 	       g.drawString("mouseX: " + Mouse.getX() + "\n MouseY: " + Mouse.getY(), 50,50 );
+	       //countdown
+	       g.drawString("remainingTime: " + CH.getTime(), 150, 25);
 	     }
 	}
 

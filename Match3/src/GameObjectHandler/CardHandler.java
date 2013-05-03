@@ -12,6 +12,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
+import Time.CountDown;
+
 import Audio.OutOfRangeException;
 import Audio.SoundEffect;
 //////////////////////////////////////////////////////
@@ -53,7 +55,11 @@ public class CardHandler {
 	private Image[] images;
 	
 	// for background music
-	final SoundTrack backgroundMusic = SoundTrack.TRACK_THREE;
+	private SoundTrack backgroundMusic;
+	
+	// countdowwn
+	private float playingTime;
+	private CountDown countDown;
 
 	//constructor
 	public CardHandler() {
@@ -76,15 +82,18 @@ public class CardHandler {
 			}
 		}
 		
-		// launch the background music
+		// initialize and launch the background music
+		backgroundMusic = SoundTrack.TRACK_THREE;
 		try {
 			backgroundMusic.setVolume(0.3f);
 			backgroundMusic.play();
-			
 		} catch (OutOfRangeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		// initialize the playing time and launch the countdown
+		playingTime = 30.0f;
+		countDown = new CountDown(playingTime);
 	}
 
 
@@ -96,7 +105,8 @@ public class CardHandler {
 		GetInput();
 		MovePieces();
 		
-
+		// update countdown
+		countDown.tick();
 	}
 
 	
@@ -399,5 +409,13 @@ public class CardHandler {
 			//g.setColor(Color.magenta);
 			g.drawRect(firstCard.x*cardSize+offsetX, firstCard.y*cardSize+offsetY, cardSize, cardSize);
 		}
+	}
+	
+	/**
+	 * Getter for the countdown
+	 * @return
+	 */
+	public CountDown getTime() {
+		return countDown;
 	}
 }
