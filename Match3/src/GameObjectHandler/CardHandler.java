@@ -1,13 +1,15 @@
 package GameObjectHandler;
 
-
+import java.awt.*;
 import java.util.ArrayList;
 import java.awt.Point;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import Time.CountDown;
@@ -197,14 +199,14 @@ public class CardHandler {
 						//move up
 					if (card.drawY > row){
 						card.drawY = card.drawY - moveRate*gDeltaTime;
-					//	System.out.println("up "+card.drawY + " row "+row);
+						System.out.println("up "+card.drawY + " row "+row);
 						madeMove=true;
 						
 						//move down
 					}else if (card.drawY < row){
-					//	System.out.println("down "+card.drawY + " row "+row);
+						System.out.println("down "+card.drawY + " row "+row);
 						card.drawY = card.drawY + moveRate*gDeltaTime;
-					//	System.out.println("down2 "+card.drawY + " row "+row);
+						System.out.println("down2 "+card.drawY + " row "+row);
 						madeMove=true;
 						
 						//move left
@@ -238,7 +240,7 @@ public class CardHandler {
 		grid[b.x][b.y] = b;
 		
 		SoundEffect.SWAP.play();
-		//System.out.println("swapping");
+		System.out.println("swapping");
 	}
 	
 	
@@ -248,7 +250,7 @@ public class CardHandler {
 			mouseX = Mouse.getX();
 			mouseY = Mouse.getY();
 			mouseClicked(mouseX, mouseY);
-		//	System.out.println("x: "+mouseX + " y: "+mouseY);
+			System.out.println("x: "+mouseX + " y: "+mouseY);
 			currentClick=true;
 		}else if(!Mouse.isButtonDown(0)){
 			currentClick=false;
