@@ -30,7 +30,7 @@ public class CardHandler {
 	//private final int APPLET_HEIGHT = 800; // height of the applet panel
 	private final float APPLET_WIDTH;
 	private final float APPLET_HEIGHT;
-	private Point clickPoint = null; 
+//	private Point clickPoint = null; 
 	//private Button debugButton; // for debugging
 	static int cardSize = 50;
 	static int offsetX = 120;

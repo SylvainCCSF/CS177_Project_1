@@ -52,10 +52,10 @@ public class Menu extends BasicGameState {
 		
 		
 		       // initialize and launch the background music
-				backgroundMusic = SoundTrack.TRACK_THREE;
+				backgroundMusic = SoundTrack.TRACK_ONE;
 				
 				try {
-					backgroundMusic.setVolume(0.3f);
+					backgroundMusic.setVolume(.9f);
 					backgroundMusic.play();
 				} catch (OutOfRangeException e) {
 					e.printStackTrace();

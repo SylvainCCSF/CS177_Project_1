@@ -1,5 +1,7 @@
 package MAIN;
 
+import java.awt.Point;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
@@ -24,7 +26,8 @@ public class FirstState extends BasicGameState {
 	private SoundTrack backgroundMusic;
 	private boolean startMusic = true;
 	private Image cursor;
-	
+	private Image background;
+	private Point bgPoint1, bgPoint2;
 	
 	public FirstState(float _WIDTH, float _HEIGHT)
 	{
@@ -43,11 +46,16 @@ public class FirstState extends BasicGameState {
 	@Override //initialize the logic
 	public void init( GameContainer container, StateBasedGame game ) throws SlickException
 	{
+		
+		
 		CH.init();
 		   try{
 			cursor = new Image("Content/ImageFiles/Cursor.png");
+			background = new Image("Content/ImageFiles/starBG.jpg");
+			
 			}catch(SlickException e){}
-		
+		    bgPoint1 = new Point(0,0);
+			bgPoint2 = new Point(0, (int)HEIGHT);
 	} 
 
 
@@ -77,10 +85,24 @@ public class FirstState extends BasicGameState {
 			game.enterState(0);
 		}
 		
+		//check for escape
 		if(input.isKeyDown(Input.KEY_ESCAPE))
 		{
 			container.exit();
 		}
+		
+		//update Background
+		bgPoint1.y--;
+		bgPoint2.y--;
+		if(bgPoint1.y < -HEIGHT)
+		{
+			bgPoint1.y = (int)HEIGHT;
+		}
+		if(bgPoint2.y < -HEIGHT)
+		{
+			bgPoint2.y = (int)HEIGHT;
+		}
+		
 	} 
 
 
@@ -88,6 +110,10 @@ public class FirstState extends BasicGameState {
 	public void render( GameContainer container, StateBasedGame game, Graphics g ) throws SlickException 
 	{ 
 
+		//draw background
+		background.draw(bgPoint1.x, bgPoint1.y,WIDTH, HEIGHT);
+		background.draw(bgPoint2.x, bgPoint2.y,WIDTH, HEIGHT);
+		
 		//draws the fps
 		g.drawString( Integer.toString( container.getWidth() ) +
 				"x" +
