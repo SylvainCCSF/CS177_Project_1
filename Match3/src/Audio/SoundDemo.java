@@ -11,8 +11,7 @@ public class SoundDemo extends JFrame {
 
 	public SoundDemo() {
 		final SoundTrack backgroundMusic = SoundTrack.TRACK_TWO;
-		
-
+	
 		// Set up UI components
 		Container cp = this.getContentPane();
 		cp.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
