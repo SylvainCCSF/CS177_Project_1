@@ -2,7 +2,7 @@ package Audio;
 
 import java.io.File;
 import java.net.URL;
-
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -41,15 +41,10 @@ public enum SoundEffect {
 	 * @param soundFileName name of the sound file (String)
 	 */
 	SoundEffect(String soundFileName) {
-		char sep = File.separatorChar; // default name-separator character 
-		String path =  sep
-				     + "SoundClips" + sep
-				     + soundFileName;
-		URL url = getClass().getResource(path);
 		
 		try {
-			effect = new Sound(url);
-			
+
+			effect = new Sound("Content/SoundClips/" + soundFileName);
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

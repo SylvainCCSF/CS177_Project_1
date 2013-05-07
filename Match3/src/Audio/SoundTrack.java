@@ -13,6 +13,7 @@ import org.newdawn.slick.SlickException;
  *
  */
 public enum SoundTrack {
+	
 	// Add the files in the '/Content/SoundClips' directory
 	// than add the sound to the list following the syntax:
 	// TRACK_NAME("sound_file_name")
@@ -29,19 +30,19 @@ public enum SoundTrack {
 	 * Constructor.
 	 * @param soundFileName name of the sound file (String)
 	 */
+	
 	SoundTrack(String soundFileName) {
 		char sep = File.separatorChar; // default name-separator character 
-		String path =  sep
-				     + "SoundClips" + sep
-				     + soundFileName;
-		URL url = getClass().getResource(path);
-		
+	
 		try {
-			track = new Music(url);
+			
+			track = new Music("Content/SoundClips/" + soundFileName);
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	/**
 	 * Play the track
