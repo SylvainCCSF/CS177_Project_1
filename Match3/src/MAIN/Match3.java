@@ -18,7 +18,8 @@ public class Match3 extends StateBasedGame {
 	{
 		super("Tutorial Applet");
 		
-
+		//Great
+		
 	}
 	
 	//creates appGameContainer for the library
@@ -33,7 +34,6 @@ public class Match3 extends StateBasedGame {
 		
 		 AppGameContainer app;
 		try{ 
-			
 	     	   app = new AppGameContainer(new Match3((WIDTH * SCALE_VALUE_WIDTH), (HEIGHT * SCALE_VALUE_HEIGHT)));
 	     	   app.setMouseGrabbed(true);
 	     	   app.setDisplayMode((int)(WIDTH*SCALE_VALUE_WIDTH), (int)(HEIGHT*SCALE_VALUE_HEIGHT), false); 

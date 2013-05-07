@@ -9,7 +9,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
 import Audio.OutOfRangeException;
 import Audio.SoundTrack;
 import GUI.Button;
@@ -34,8 +33,6 @@ public class Menu extends BasicGameState {
 		background = new Image("Content/ImageFiles/MenuBG.jpg");
 		cursor = new Image("Content/ImageFiles/Cursor.png");
 		}catch(SlickException e){}
-		
-		
 	}
 
 	@Override
@@ -64,7 +61,8 @@ public class Menu extends BasicGameState {
 					e.printStackTrace();
 				}
 	}
-
+	
+	
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
