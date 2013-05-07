@@ -13,6 +13,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import Time.CountDown;
 
+import Animation.Particle;
+import Animation.ParticleHandler;
 import Audio.OutOfRangeException;
 import Audio.SoundEffect;
 //////////////////////////////////////////////////////
@@ -53,12 +55,14 @@ public class CardHandler {
 	// countdowwn
 	private float playingTime;
 	private CountDown countDown;
+	private ParticleHandler[] particles;
 
 	//constructor
 	public CardHandler(float _APPLET_WIDTH, float _APPLET_HEIGHT)
 	{
 		APPLET_WIDTH = _APPLET_WIDTH;
 		APPLET_HEIGHT = _APPLET_HEIGHT;
+		particles = new ParticleHandler[64];
 	}
 
 	//init
@@ -96,6 +100,14 @@ public class CardHandler {
 		
 		// update countdown
 		countDown.tick();
+		
+		//update particles
+		for(int i = 0; i < particles.length; i++)
+		{
+			if(particles[i] != null)
+		    particles[i].update(container, game, delta);
+		}
+		
 	}
 
 	
@@ -122,8 +134,14 @@ public class CardHandler {
 			for( int j = 0; j<matches.get(i).size(); j++){
 				ArrayList<Card> match = matches.get(i);
 				Card a = match.get(j);
+				//create particle handlers for each explosion
+				particles[j+i] = new ParticleHandler(a.x*50 + offsetX, (a.y*50) + offsetY);
+			
+				
+				
 				int x = a.x;
 				int y = a.y;
+				
 				grid[a.x][a.y]=null;
 				DropDown(x, y);
 			}
@@ -228,6 +246,7 @@ public class CardHandler {
 		grid[a.x][a.y] = a;
 		grid[b.x][b.y] = b;
 		
+		
 		SoundEffect.SWAP.play();
 		//System.out.println("swapping");
 	}
@@ -265,7 +284,7 @@ public class CardHandler {
 			selection.y = (pnt.y-offsetY)/cardSize;
 			clickCard = grid[selection.x][selection.y];
 			
-			System.out.println("pnt x: " + pnt.x + " y: "+pnt.y);
+//   		System.out.println("pnt x: " + pnt.x + " y: "+pnt.y);
 //			System.out.println("selection x: " + selection.x + " y: "+selection.y);
 //			System.out.println("clickCard x: " + clickCard.x + " y: "+clickCard.y);
 			//firstCard = grid[selection.x][selection.y];
@@ -324,7 +343,7 @@ public class CardHandler {
 	public ArrayList CheckForMatches(){
 		ArrayList<ArrayList> matchList = new ArrayList();
 
-		//search horizontal
+		//search horizontal greater than 2
 		for (int row = 0; row<gridSize; row++){
 			for (int col = 0; col<gridSize-2; col++){
 				ArrayList<Card> match = getMatchHoriz(col, row);
@@ -335,13 +354,14 @@ public class CardHandler {
 			}
 		}
 		
-		//search vertical
+		//search vertical Greater than 2
 		for (int col = 0; col<gridSize; col++){
 			for (int row = 0; row<gridSize-2; row++){
 				ArrayList<Card> match = getMatchVert(col, row);
 				if (match.size()>2){
 					matchList.add(match);
 					row += match.size() -1;
+					
 					
 				}
 			}
@@ -398,6 +418,13 @@ public class CardHandler {
 				//image.draw(card.x*cardSize+offsetX,y*cardSize+offsetY, 0.5f, Color.white);
 			}
 		}
+		
+		for(int i = 0; i < particles.length; i++)
+		{
+			if(particles[i] != null)
+				particles[i].render(container, game, g);
+		}
+		
 		
 		//draw selection
 		if (firstCard != null){
