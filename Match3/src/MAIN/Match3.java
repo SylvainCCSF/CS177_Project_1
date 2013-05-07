@@ -1,5 +1,7 @@
 package MAIN;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -7,27 +9,34 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Match3 extends StateBasedGame {
 
-	public static final byte menu = 0;
-	public static final int WIDTH=600, HEIGHT=800;
+	public static final byte MENU = 0, GAME=1;
+	public static final float SCALE_VALUE_HEIGHT = 0.5f, SCALE_VALUE_WIDTH = .32f; //scales the game to 1/4th the size of clients screen
+	public static float WIDTH, HEIGHT;
 	
 	//declare the name of the applet and add the first state
-	public Match3()
+	public Match3(float _WIDTH, float _HEIGHT)
 	{
-		
 		super("Tutorial Applet");
 		
-		//add states here- They are saved in a stack
-		this.addState(new FirstState(WIDTH, HEIGHT)); 
+
 	}
 	
 	//creates appGameContainer for the library
 	public static void main(String[] argv) throws SlickException
 	{
-		AppGameContainer app;
 		
+		//setup automatic screen scaling
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Dimension scrnsize = toolkit.getScreenSize();
+	    WIDTH = scrnsize.width; 
+	    HEIGHT = scrnsize.height;
+		
+		 AppGameContainer app;
 		try{ 
-	     	   app = new AppGameContainer(new Match3());
-	     	   app.setDisplayMode(WIDTH, HEIGHT, false); 
+			
+	     	   app = new AppGameContainer(new Match3((WIDTH * SCALE_VALUE_WIDTH), (HEIGHT * SCALE_VALUE_HEIGHT)));
+	     	   app.setMouseGrabbed(true);
+	     	   app.setDisplayMode((int)(WIDTH*SCALE_VALUE_WIDTH), (int)(HEIGHT*SCALE_VALUE_HEIGHT), false); 
 	     	   app.setShowFPS(true);
 	     	   app.setTargetFrameRate(60);
 	     	   app.start();    	   
@@ -40,11 +49,15 @@ public class Match3 extends StateBasedGame {
 	public void initStatesList(GameContainer gc) throws SlickException
 	{
 		 //init() states here
-		this.getState(1).init(gc, this);
-		this.enterState(1);  //enter first state
-	}
 
+		
+
+		this.addState(new Menu(WIDTH * SCALE_VALUE_WIDTH, HEIGHT * SCALE_VALUE_HEIGHT));
+		this.addState(new FirstState(WIDTH * SCALE_VALUE_WIDTH, HEIGHT * SCALE_VALUE_HEIGHT)); 
+		this.enterState(0);  //enter first state
 	
+		
 	
+	}
 	
 }

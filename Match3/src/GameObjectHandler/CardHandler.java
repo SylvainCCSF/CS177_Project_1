@@ -4,6 +4,7 @@ package GameObjectHandler;
 import java.util.ArrayList;
 import java.awt.Point;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -23,9 +24,10 @@ import Audio.SoundEffect;
 import Audio.SoundTrack;
 
 public class CardHandler {
-	private final int APPLET_WIDTH = 800; // width of the applet panel
-	private final int APPLET_HEIGHT = 800; // height of the applet panel
-	
+	//private final int APPLET_WIDTH = 800; // width of the applet panel
+	//private final int APPLET_HEIGHT = 800; // height of the applet panel
+	private final float APPLET_WIDTH;
+	private final float APPLET_HEIGHT;
 	private Point clickPoint = null; 
 	//private Button debugButton; // for debugging
 	static int cardSize = 50;
@@ -45,22 +47,18 @@ public class CardHandler {
 	int numImages = 6;
 	//Color[] images;
 	Card[][] grid;
-
-
 	private int mouseX, mouseY;
-
 	private boolean currentClick = false;
 	private Image[] images;
-	
-	// for background music
-	private SoundTrack backgroundMusic;
-	
 	// countdowwn
 	private float playingTime;
 	private CountDown countDown;
 
 	//constructor
-	public CardHandler() {
+	public CardHandler(float _APPLET_WIDTH, float _APPLET_HEIGHT)
+	{
+		APPLET_WIDTH = _APPLET_WIDTH;
+		APPLET_HEIGHT = _APPLET_HEIGHT;
 	}
 
 	//init
@@ -80,14 +78,7 @@ public class CardHandler {
 			}
 		}
 		
-		// initialize and launch the background music
-		backgroundMusic = SoundTrack.TRACK_THREE;
-		try {
-			backgroundMusic.setVolume(0.3f);
-			backgroundMusic.play();
-		} catch (OutOfRangeException e) {
-			e.printStackTrace();
-		}
+		
 		
 		// initialize the playing time and launch the countdown
 		playingTime = 30.0f;
@@ -242,8 +233,8 @@ public class CardHandler {
 	}
 	
 	
-	public void GetInput(){
-
+	public void GetInput()
+	{
 		if (Mouse.isButtonDown(0) && currentClick==false){
 			mouseX = Mouse.getX();
 			mouseY = Mouse.getY();
@@ -260,12 +251,16 @@ public class CardHandler {
 	
 	
 	public void mouseClicked(int clickX, int clickY) {
-		clickY = APPLET_HEIGHT - clickY;
+		
+	
+		
+		clickY = (int)APPLET_HEIGHT - clickY;
 		Point pnt = new Point(clickX, clickY);
 
 		Point selection = new Point();
 		Card clickCard;
-		if (pnt.x>offsetX && pnt.x<maxX && pnt.y>offsetY && pnt.y<maxY){
+		if (pnt.x>offsetX && pnt.x<maxX && pnt.y>offsetY && pnt.y<maxY)
+		{
 			selection.x = (pnt.x-offsetX)/cardSize;
 			selection.y = (pnt.y-offsetY)/cardSize;
 			clickCard = grid[selection.x][selection.y];
@@ -355,7 +350,7 @@ public class CardHandler {
 			
 		return matchList;
 	}
-	
+
 	
 	public ArrayList getMatchHoriz(int col, int row){
 		ArrayList<Card> match = new ArrayList();
@@ -398,7 +393,9 @@ public class CardHandler {
 				float y = (float)card.drawY;
 				//System.out.println("y "+y);
 				image.draw(card.x*cardSize+offsetX, y*cardSize+offsetY);
-
+				
+				//to scale the render the x, y need to be set
+				//image.draw(card.x*cardSize+offsetX,y*cardSize+offsetY, 0.5f, Color.white);
 			}
 		}
 		
