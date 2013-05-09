@@ -1,13 +1,54 @@
 package Scores;
 
+import java.io.*;
+
 public class ScoresDemo {
 	
 	public static int counter = 0;
 	
+	public static ScoresInfo retrieveScores() {
+		ScoresInfo list = null;
+		
+	    try {
+	      File f = new File("scores.ser");
+	      if (f.exists()) {
+	    	  FileInputStream fichier = new FileInputStream(f);
+		      ObjectInputStream ois = new ObjectInputStream(fichier);
+		      list = (ScoresInfo) ois.readObject();
+	      } else {
+	    	  list = new ScoresInfo();
+	      }
+	      
+} 
+	    catch (java.io.IOException e) {
+	      e.printStackTrace();
+	    }
+	    catch (ClassNotFoundException e) {
+	      e.printStackTrace();
+	    }
+	    
+	    return list;
+	}
+	
+	public static void saveScores(ScoresInfo list) {
+	    try {
+	        FileOutputStream fichier = new FileOutputStream("scores.ser");
+	        ObjectOutputStream oos = new ObjectOutputStream(fichier);
+	        oos.writeObject(list);
+	        oos.flush();
+	        oos.close();
+	      }
+	      catch (java.io.IOException e) {
+	        e.printStackTrace();
+	      }
+
+	}
+
 	public static void main(String[] args) {
 		
 		// test ScoresInfo constructor
-		ScoresInfo list = new ScoresInfo();
+		//ScoresInfo list = new ScoresInfo();
+		ScoresInfo list = retrieveScores();
 		
 		// test Score constructor
 		displayTest("Score constructors and toString method");
@@ -135,7 +176,7 @@ public class ScoresDemo {
                 + list.getBestPlayer());
 
 		
-		
+		saveScores(list);
 		
 	}
 	

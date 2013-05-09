@@ -22,5 +22,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Match3/res/windows"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="Content"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
