@@ -18,8 +18,6 @@ public class Match3 extends StateBasedGame {
 	{
 		super("Tutorial Applet");
 		
-		//Great
-		
 	}
 	
 	//creates appGameContainer for the library

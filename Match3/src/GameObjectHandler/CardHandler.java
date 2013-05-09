@@ -26,18 +26,16 @@ import Audio.SoundEffect;
 import Audio.SoundTrack;
 
 public class CardHandler {
-	//private final int APPLET_WIDTH = 800; // width of the applet panel
-	//private final int APPLET_HEIGHT = 800; // height of the applet panel
+	
 	private final float APPLET_WIDTH;
 	private final float APPLET_HEIGHT;
-//	private Point clickPoint = null; 
-	//private Button debugButton; // for debugging
-	static int cardSize = 50;
-	static int offsetX = 120;
-	static int offsetY = 120;
-	static int gridSize = 8;
-	static int maxX = gridSize*cardSize+offsetX;
-	static int maxY = gridSize*cardSize+offsetY;
+	private float imageScale;
+	int cardSize;
+	int offsetX;
+	int offsetY;
+	int gridSize = 8;
+	int maxX;
+	int maxY;
 	private boolean isRunning = true;
 	private boolean isSwapping = false;
 	private boolean isDropping = false;
@@ -47,12 +45,10 @@ public class CardHandler {
 	Card firstCard;
 	boolean updateGrid=false;
 	int numImages = 6;
-	//Color[] images;
 	Card[][] grid;
 	private int mouseX, mouseY;
 	private boolean currentClick = false;
 	private Image[] images;
-	// countdowwn
 	private float playingTime;
 	private CountDown countDown;
 	private ParticleHandler[] particles;
@@ -63,9 +59,13 @@ public class CardHandler {
 		APPLET_WIDTH = _APPLET_WIDTH;
 		APPLET_HEIGHT = _APPLET_HEIGHT;
 		particles = new ParticleHandler[64];
+		cardSize = (int)(APPLET_WIDTH * 0.08f);
+		offsetX = (int)(APPLET_WIDTH * .195f);
+		offsetY = (int)(APPLET_HEIGHT * 0.233f);
+		maxX = gridSize*cardSize+offsetX;
+		maxY = gridSize*cardSize+offsetY;
 	}
-
-	//init
+	
 	public void init() {
 		images = new Image[numImages];
 		
@@ -82,19 +82,16 @@ public class CardHandler {
 			}
 		}
 		
-		
-		
+		//scale the image
+		imageScale =  (APPLET_WIDTH * 0.08f) / images[0].getWidth();  
 		// initialize the playing time and launch the countdown
 		playingTime = 30.0f;
 		countDown = new CountDown(playingTime);
 	}
 
-
-	public void update(GameContainer container, StateBasedGame game, int delta)
-			throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta)	throws SlickException {
 		
 		gDeltaTime = (double)delta/1000;
-		//System.out.println(gDeltaTime);
 		GetInput();
 		MovePieces();
 		
@@ -107,9 +104,33 @@ public class CardHandler {
 			if(particles[i] != null)
 		    particles[i].update(container, game, delta);
 		}
-		
 	}
-
+	
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
+		//draw grid
+		for (int i = 0; i < gridSize; i++) {
+			for (int j = 0; j < gridSize; j++) {
+				Card card = grid[i][j];
+				Image image = images[card.getCardType()];
+				float y = (float)card.drawY;
+				
+				image.draw(card.x*cardSize+offsetX, y*cardSize+offsetY, imageScale);
+			}
+		}
+		
+		for(int i = 0; i < particles.length; i++)
+		{
+			if(particles[i] != null)
+				particles[i].render(container, game, g);
+		}
+		
+		
+		//draw selection
+		if (firstCard != null){
+			g.drawRect(firstCard.x*cardSize+offsetX, firstCard.y*cardSize+offsetY, cardSize, cardSize);
+		}
+	}
+	
 	
 	public Card[][] BuildGrid(){
 		
@@ -136,9 +157,6 @@ public class CardHandler {
 				Card a = match.get(j);
 				//create particle handlers for each explosion
 				particles[j+i] = new ParticleHandler(a.x*50 + offsetX, (a.y*50) + offsetY);
-			
-				
-				
 				int x = a.x;
 				int y = a.y;
 				
@@ -206,14 +224,11 @@ public class CardHandler {
 						//move up
 					if (card.drawY > row){
 						card.drawY = card.drawY - moveRate*gDeltaTime;
-					//	System.out.println("up "+card.drawY + " row "+row);
 						madeMove=true;
 						
 						//move down
 					}else if (card.drawY < row){
-					//	System.out.println("down "+card.drawY + " row "+row);
 						card.drawY = card.drawY + moveRate*gDeltaTime;
-					//	System.out.println("down2 "+card.drawY + " row "+row);
 						madeMove=true;
 						
 						//move left
@@ -248,7 +263,6 @@ public class CardHandler {
 		
 		
 		SoundEffect.SWAP.play();
-		//System.out.println("swapping");
 	}
 	
 	
@@ -258,7 +272,6 @@ public class CardHandler {
 			mouseX = Mouse.getX();
 			mouseY = Mouse.getY();
 			mouseClicked(mouseX, mouseY);
-		//	System.out.println("x: "+mouseX + " y: "+mouseY);
 			currentClick=true;
 		}else if(!Mouse.isButtonDown(0)){
 			currentClick=false;
@@ -283,11 +296,6 @@ public class CardHandler {
 			selection.x = (pnt.x-offsetX)/cardSize;
 			selection.y = (pnt.y-offsetY)/cardSize;
 			clickCard = grid[selection.x][selection.y];
-			
-//   		System.out.println("pnt x: " + pnt.x + " y: "+pnt.y);
-//			System.out.println("selection x: " + selection.x + " y: "+selection.y);
-//			System.out.println("clickCard x: " + clickCard.x + " y: "+clickCard.y);
-			//firstCard = grid[selection.x][selection.y];
 
 		}else{
 			return;
@@ -361,13 +369,9 @@ public class CardHandler {
 				if (match.size()>2){
 					matchList.add(match);
 					row += match.size() -1;
-					
-					
 				}
 			}
 		}		
-		
-			
 		return matchList;
 	}
 
@@ -402,36 +406,6 @@ public class CardHandler {
 		}
 		return match;
 	}	
-	
-	public void render(GameContainer container, StateBasedGame game, Graphics g) {
-		//draw grid
-		for (int i = 0; i < gridSize; i++) {
-			for (int j = 0; j < gridSize; j++) {
-				//images[grid[i][j].getCardType()].draw((cardSize)*i+offsetX, (cardSize)*j+offsetY);
-				Card card = grid[i][j];
-				Image image = images[card.getCardType()];
-				float y = (float)card.drawY;
-				//System.out.println("y "+y);
-				image.draw(card.x*cardSize+offsetX, y*cardSize+offsetY);
-				
-				//to scale the render the x, y need to be set
-				//image.draw(card.x*cardSize+offsetX,y*cardSize+offsetY, 0.5f, Color.white);
-			}
-		}
-		
-		for(int i = 0; i < particles.length; i++)
-		{
-			if(particles[i] != null)
-				particles[i].render(container, game, g);
-		}
-		
-		
-		//draw selection
-		if (firstCard != null){
-			//g.setColor(Color.magenta);
-			g.drawRect(firstCard.x*cardSize+offsetX, firstCard.y*cardSize+offsetY, cardSize, cardSize);
-		}
-	}
 	
 	/**
 	 * Getter for the countdown
