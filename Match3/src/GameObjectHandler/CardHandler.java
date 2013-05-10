@@ -3,6 +3,12 @@ package GameObjectHandler;
 
 import java.util.ArrayList;
 import java.awt.Point;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
@@ -11,6 +17,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import Scores.Score;
+import Scores.ScoresInfo;
 import Time.CountDown;
 
 import Animation.Particle;
@@ -52,6 +60,7 @@ public class CardHandler {
 	private float playingTime;
 	private CountDown countDown;
 	private ParticleHandler[] particles;
+	private Score score;
 
 	//constructor
 	public CardHandler(float _APPLET_WIDTH, float _APPLET_HEIGHT)
@@ -87,6 +96,8 @@ public class CardHandler {
 		// initialize the playing time and launch the countdown
 		playingTime = 30.0f;
 		countDown = new CountDown(playingTime);
+		//create a new score
+		score = new Score("player 1"); // player 1 = default player
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta)	throws SlickException {
@@ -159,6 +170,9 @@ public class CardHandler {
 				particles[j+i] = new ParticleHandler(a.x*50 + offsetX, (a.y*50) + offsetY);
 				int x = a.x;
 				int y = a.y;
+				
+				// update score
+				score.addToCurrent(1);
 				
 				grid[a.x][a.y]=null;
 				DropDown(x, y);
@@ -413,5 +427,19 @@ public class CardHandler {
 	 */
 	public CountDown getTime() {
 		return countDown;
+	}
+	
+
+	
+	/**
+	 * Getter for the score
+	 * @return integer equals to the current score
+	 */
+	public int getScoreAmount() {
+		return score.getScore();
+	}
+	
+	public Score getScoreObject() {
+		return score;
 	}
 }

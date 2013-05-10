@@ -7,3 +7,5 @@ Match3/.classpath
 *.prefs
 
 *.class
+
+Match3/Content/Backups/scores.ser
