@@ -5,3 +5,5 @@
 Match3/.classpath
 
 *.prefs
+
+*.class
