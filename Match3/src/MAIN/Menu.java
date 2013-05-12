@@ -9,6 +9,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import Animation.Effects.Text;
 import Audio.OutOfRangeException;
 import Audio.SoundTrack;
 import GUI.Button;
@@ -23,6 +25,8 @@ public class Menu extends BasicGameState {
 	private boolean startMusic = true;
 	private Image background, cursor;
 	private Rectangle mouseRect;
+	
+	private Text text;
 	
 	public Menu(float _WIDTH, float _HEIGHT)
 	{
@@ -57,6 +61,7 @@ public class Menu extends BasicGameState {
 				try {
 					backgroundMusic.setVolume(.9f);
 					backgroundMusic.play();
+					text = new Text();
 				} catch (OutOfRangeException e) {
 					e.printStackTrace();
 				}
@@ -124,9 +129,10 @@ public class Menu extends BasicGameState {
 		exitButton.render(container, game, g);
 		
 		
+		text.draw("MATCH", 40, 200);
+		
 		//the Cursor, draw last!
 		cursor.draw(Mouse.getX(), HEIGHT-Mouse.getY());
-		
 	}
 
 	

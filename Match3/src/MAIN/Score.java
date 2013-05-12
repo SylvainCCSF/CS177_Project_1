@@ -68,10 +68,6 @@ public class Score extends BasicGameState{
 			game.enterState(3);
 		}
 		
-		if(Mouse.isButtonDown(0))
-		{
-			game.enterState(3);
-		}
 		
 	}
 
