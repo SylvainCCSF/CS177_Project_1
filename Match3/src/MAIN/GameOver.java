@@ -35,17 +35,6 @@ public class GameOver extends BasicGameState{
 		}catch(SlickException e){}
 
 	}
-
-
-	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException
-	{
-
-		background.draw(0, 0, WIDTH, HEIGHT);
-		g.drawString("Press ESC to ESCAPE", WIDTH * 0.25f, HEIGHT * 0.75f);
-		g.drawString("Press ENTER to CONTINUE", WIDTH * 0.25f, HEIGHT * 0.65f);
-	}
-
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
 	{
@@ -63,6 +52,17 @@ public class GameOver extends BasicGameState{
 	}
 
 
+
+	@Override
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException
+	{
+
+		background.draw(0, 0, WIDTH, HEIGHT);
+		g.drawString("Press ESC to ESCAPE", WIDTH * 0.25f, HEIGHT * 0.75f);
+		g.drawString("Press ENTER to CONTINUE", WIDTH * 0.25f, HEIGHT * 0.65f);
+	}
+
+	
 	@Override
 	public int getID() {
 		// TODO Auto-generated method stub

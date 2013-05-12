@@ -114,11 +114,13 @@ public class FirstState extends BasicGameState {
 		
 		
 		//update Background
-		bgPoint1.y--;
-		bgPoint2.y--;
+		
+		bgPoint1.y -= (int)((60 / CH.getTime().getTime()));
+	    bgPoint2.y -= (int)(60 / (CH.getTime().getTime()));
+		
 		if(bgPoint1.y < -HEIGHT)
 		{
-			bgPoint1.y = (int)HEIGHT;
+		  bgPoint1.y = (int)HEIGHT;
 		}
 		if(bgPoint2.y < -HEIGHT)
 		{

@@ -175,11 +175,11 @@ public class CardHandler {
 				
 				int additionalTime = 0;
 				
-			    if(countDown.getTime() < 10)
+			    if(countDown.getTime() < 3)
 				{
 					additionalTime = 1;
 				}
-				else if (countDown.getTime() < 15)
+				else if (countDown.getTime() < 5)
 				{
 					additionalTime = 2;
 				}
