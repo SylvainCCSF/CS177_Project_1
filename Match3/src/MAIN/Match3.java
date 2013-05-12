@@ -9,7 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Match3 extends StateBasedGame {
 
-	public static final byte MENU = 0, GAME=1;
+	public static final byte MENU = 0, GAME=1, SCORE=2, GAMEOVER=3;
 	public static final float SCALE_VALUE_HEIGHT = 0.5f, SCALE_VALUE_WIDTH = .32f; //scales the game to 1/4th the size of clients screen
 	public static float WIDTH, HEIGHT;
 	
@@ -35,7 +35,7 @@ public class Match3 extends StateBasedGame {
 	     	   app = new AppGameContainer(new Match3((WIDTH * SCALE_VALUE_WIDTH), (HEIGHT * SCALE_VALUE_HEIGHT)));
 	     	   app.setMouseGrabbed(true);
 	     	   app.setDisplayMode((int)(WIDTH*SCALE_VALUE_WIDTH), (int)(HEIGHT*SCALE_VALUE_HEIGHT), false); 
-	     	   app.setShowFPS(true);
+	     	   app.setShowFPS(false);
 	     	   app.setTargetFrameRate(60);
 	     	   app.start();    	   
 	     	}catch(SlickException e)
@@ -46,16 +46,11 @@ public class Match3 extends StateBasedGame {
 	
 	public void initStatesList(GameContainer gc) throws SlickException
 	{
-		 //init() states here
-
-		
-
 		this.addState(new Menu(WIDTH * SCALE_VALUE_WIDTH, HEIGHT * SCALE_VALUE_HEIGHT));
 		this.addState(new FirstState(WIDTH * SCALE_VALUE_WIDTH, HEIGHT * SCALE_VALUE_HEIGHT)); 
-		this.enterState(0);  //enter first state
-	
-		
-	
+		this.addState(new Score(WIDTH * SCALE_VALUE_WIDTH, HEIGHT * SCALE_VALUE_HEIGHT));
+		this.addState(new GameOver(WIDTH * SCALE_VALUE_WIDTH, HEIGHT * SCALE_VALUE_HEIGHT));
+		this.enterState(MENU);  //enter first state
 	}
 	
 }

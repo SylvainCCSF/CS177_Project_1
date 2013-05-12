@@ -109,6 +109,7 @@ public class CardHandler {
 		// update countdown
 		countDown.tick();
 		
+		
 		//update particles
 		for(int i = 0; i < particles.length; i++)
 		{
@@ -137,7 +138,8 @@ public class CardHandler {
 		
 		
 		//draw selection
-		if (firstCard != null){
+		if (firstCard != null)
+		{
 			g.drawRect(firstCard.x*cardSize+offsetX, firstCard.y*cardSize+offsetY, cardSize, cardSize);
 		}
 	}
@@ -167,20 +169,30 @@ public class CardHandler {
 				ArrayList<Card> match = matches.get(i);
 				Card a = match.get(j);
 				//create particle handlers for each explosion
-				particles[j+i] = new ParticleHandler(a.x*50 + offsetX, (a.y*50) + offsetY);
+				particles[j+i] = new ParticleHandler(a.x*cardSize + offsetX, (a.y*cardSize) + offsetY);
 				int x = a.x;
 				int y = a.y;
 				
-				// update score
+				int additionalTime = 0;
+				
+			    if(countDown.getTime() < 10)
+				{
+					additionalTime = 1;
+				}
+				else if (countDown.getTime() < 15)
+				{
+					additionalTime = 2;
+				}
+			
+				// update score add time.
 				score.addToCurrent(1);
+				countDown.addTime(additionalTime);
 				
 				grid[a.x][a.y]=null;
 				DropDown(x, y);
 			}
 		}
-		
 		AddNewPieces();
-		
 	}
 	
 	
@@ -208,8 +220,6 @@ public class CardHandler {
 					Card newCard = new Card(i,j,imageIndex);
 					newCard.drawY = -missingPieces++;
 					SoundEffect.DROP.play();
-					//System.out.println("newcard.y "+newCard.y);
-					//System.out.println("i "+i+ " j "+j);
 					grid[i][j] = newCard;
 					isDropping=true;
 				}
@@ -290,11 +300,7 @@ public class CardHandler {
 		}else if(!Mouse.isButtonDown(0)){
 			currentClick=false;
 		}
-		
-		
 	}
-	
-	
 	
 	public void mouseClicked(int clickX, int clickY) {
 		
