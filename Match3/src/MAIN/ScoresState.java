@@ -48,16 +48,17 @@ public class ScoresState extends BasicGameState{
 	{
 		
 		background.draw(0,0, WIDTH, HEIGHT);
-		g.drawString("SCORES", WIDTH * 0.5f, HEIGHT * 0.15f);
-		g.drawString(scoresList.toString(), WIDTH * 0.15f, HEIGHT * 0.25f);
-		g.drawString("press Enter to continue", WIDTH * 0.15f, HEIGHT * 0.95f);
+		g.drawString("SCORES", WIDTH * 0.45f, HEIGHT * 0.15f);
+		g.drawString(scoresList.toString(12), WIDTH * 0.15f, HEIGHT * 0.25f);
+		g.drawString("press Enter to continue", WIDTH * 0.15f, HEIGHT * 0.90f);
 		
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
 	{
-		
+		// get the most recent scores list
+		scoresList = retrieveScores();
 		if(input.isKeyPressed(Input.KEY_ENTER))
 		{
 			game.enterState(3);

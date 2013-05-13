@@ -2,6 +2,10 @@ package Scores;
 
 public class ScoresInfo implements java.io.Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final int DEFAULT_ARRAY_SIZE = 20;
 	private Score[] scoreList;
 	private int lastIndex;  // index of the last entry in the list 
@@ -116,4 +120,15 @@ public class ScoresInfo implements java.io.Serializable {
 		return result;
 	}
 
+	public String toString(int numOfLines) {
+		String result = "";
+		// be sure the wanted number of lines does not exceed the lastIndex
+		int indexOfLastDisplayedLine = numOfLines - 1 < lastIndex ? numOfLines - 1 : lastIndex; 
+		
+		for (int i = 0; i <= indexOfLastDisplayedLine; i++) {
+			result += (i+1) + " - " + scoreList[i] + "\n";
+		}
+		
+		return result;
+	}
 }
