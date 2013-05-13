@@ -11,8 +11,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import Animation.Effects.Text;
 import Audio.OutOfRangeException;
@@ -104,8 +102,7 @@ public class Menu extends BasicGameState {
 		{
 		  startMusic = true;
 		  game.getState(1).init(container, game);
-		  game.enterState(1, new FadeOutTransition(Color.black, 500), new FadeInTransition(Color.black, 500) );
-		//  game.enterState(1);
+		  game.enterState(1);
 		}
 		
 		

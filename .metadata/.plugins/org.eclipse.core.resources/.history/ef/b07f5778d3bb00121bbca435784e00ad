@@ -104,7 +104,7 @@ public class Menu extends BasicGameState {
 		{
 		  startMusic = true;
 		  game.getState(1).init(container, game);
-		  game.enterState(1, new FadeOutTransition(Color.black, 500), new FadeInTransition(Color.black, 500) );
+		  game.enterState(1, new FadeOutTransition(Color.white, 300), new FadeInTransition(Color.white, 300) );
 		//  game.enterState(1);
 		}
 		

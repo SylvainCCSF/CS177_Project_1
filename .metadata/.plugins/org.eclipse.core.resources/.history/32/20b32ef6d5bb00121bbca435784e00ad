@@ -152,8 +152,8 @@ public class FirstState extends BasicGameState {
 	{ 
 
 		//draw background
-		background.draw(bgPoint1.x, bgPoint1.y,WIDTH, HEIGHT, Color.cyan);
-		background.draw(bgPoint2.x, bgPoint2.y,WIDTH, HEIGHT, Color.cyan);
+		background.draw(bgPoint1.x, bgPoint1.y,WIDTH, HEIGHT);
+		background.draw(bgPoint2.x, bgPoint2.y,WIDTH, HEIGHT);
 		
 
 		//Render the Card Handler

@@ -55,10 +55,7 @@ public class ScoresState extends BasicGameState{
 		background.draw(0,0, WIDTH, HEIGHT);
 
 		text.draw("High Scores", WIDTH * 0.35f, HEIGHT * 0.15f, WIDTH * 0.03f, WIDTH * 0.03f, Color.gray);
-		text.draw("High Scores", WIDTH * 0.35f+3, HEIGHT * 0.15f+3, WIDTH * 0.03f, WIDTH * 0.03f, Color.black);
-		
 		text.draw("press Enter to continue", WIDTH * 0.15f, HEIGHT * 0.90f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
-		text.draw("press Enter to continue", WIDTH * 0.15f+3, HEIGHT * 0.90f+3,  WIDTH * 0.03f,WIDTH * 0.03f, Color.black );
 		
 		
 		for(int i = 0; i < 12; i++)

@@ -152,8 +152,8 @@ public class FirstState extends BasicGameState {
 	{ 
 
 		//draw background
-		background.draw(bgPoint1.x, bgPoint1.y,WIDTH, HEIGHT, Color.cyan);
-		background.draw(bgPoint2.x, bgPoint2.y,WIDTH, HEIGHT, Color.cyan);
+		background.draw(bgPoint1.x, bgPoint1.y,WIDTH, HEIGHT);
+		background.draw(bgPoint2.x, bgPoint2.y,WIDTH, HEIGHT);
 		
 
 		//Render the Card Handler
@@ -163,7 +163,7 @@ public class FirstState extends BasicGameState {
 		text.draw("" + CH.getTime() , WIDTH * 0.5f,  HEIGHT * 0.10f, WIDTH * 0.07f, WIDTH * 0.07f, Color.pink);
 		
 		// score
-		text.draw("SCORE: " + CH.getScoreAmount(), WIDTH * 0.25f+3, HEIGHT * 0.15f+3, WIDTH * 0.02f, WIDTH * 0.02f, Color.red );
+		text.draw("SCORE: " + CH.getScoreAmount(), WIDTH * 0.25f+3, HEIGHT * 0.15f+3, WIDTH * 0.02f, WIDTH * 0.02f, Color.gray );
 		
 		//press escape to exit
 		text.draw("Press escape to exit", 0, HEIGHT * 0.95f, WIDTH * 0.03f, WIDTH * 0.03f, Color.white);
