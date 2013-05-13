@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -17,6 +18,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import Animation.Effects.Text;
 import Audio.OutOfRangeException;
 import Audio.SoundTrack;
 import GameObjectHandler.CardHandler;
@@ -36,6 +38,7 @@ public class FirstState extends BasicGameState {
 	private Point bgPoint1, bgPoint2;
 	private static ScoresInfo scoresList;
 	private  Input input;
+	private Text text;
 	
 	
 	
@@ -60,10 +63,16 @@ public class FirstState extends BasicGameState {
 		   try{
 			cursor = new Image("Content/ImageFiles/Cursor.png");
 			background = new Image("Content/ImageFiles/starBG.jpg");
+<<<<<<< HEAD
+			text = new Text();
+			// print scores list for debugging
+			System.out.println(scoresList);
+=======
 			
 			// retrieve the scores list and print it for debugging
 			scoresList=retrieveScores();
 			System.out.println("scores:\n" + scoresList);
+>>>>>>> 6a0419a3cd519739a3d8373b0bfe3093f79ca544
 			
 			
 			}catch(SlickException e){}
@@ -110,7 +119,7 @@ public class FirstState extends BasicGameState {
 		}
 		
 		//gameover
-		if((int)CH.getTime().getTime() <= 0)
+		if(CH.getTime().getTime() <= 0)
 		{
 			// add score to the list
 			scoresList.addEntry(CH.getScoreObject());
@@ -150,9 +159,15 @@ public class FirstState extends BasicGameState {
 		//Render the Card Handler
 		CH.render(container, game, g);
 		// countdown
-		g.drawString("" + CH.getTime(), WIDTH * 0.5f, HEIGHT * 0.10f);
+		
+		text.draw("" + CH.getTime() , WIDTH * 0.5f,  HEIGHT * 0.10f, WIDTH * 0.07f, WIDTH * 0.07f, Color.pink);
+		
 		// score
-		g.drawString("SCORE: " + CH.getScoreAmount(), WIDTH * 0.25f, HEIGHT * 0.15f);
+		text.draw("SCORE: " + CH.getScoreAmount(), WIDTH * 0.25f+3, HEIGHT * 0.15f+3, WIDTH * 0.02f, WIDTH * 0.02f, Color.gray );
+		
+		//press escape to exit
+		text.draw("Press escape to exit", 0, HEIGHT * 0.95f, WIDTH * 0.03f, WIDTH * 0.03f, Color.white);
+		
 		cursor.draw(Mouse.getX(), HEIGHT-Mouse.getY());
 		
 	}

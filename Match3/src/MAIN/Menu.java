@@ -1,8 +1,10 @@
 package MAIN;
 
+
 import java.awt.Rectangle;
 
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -128,8 +130,9 @@ public class Menu extends BasicGameState {
 		settingsButton.render(container, game, g);
 		exitButton.render(container, game, g);
 		
-		
-		text.draw("MATCH", 40, 200);
+		//draw text
+		text.draw("match 3", WIDTH * 0.10f, HEIGHT * 0.10f, WIDTH * 0.10f, HEIGHT * 0.10f , Color.red);
+		text.draw("match 3", WIDTH * 0.10f + 3, HEIGHT * 0.10f + 3, WIDTH * 0.10f, HEIGHT * 0.10f , Color.gray);
 		
 		//the Cursor, draw last!
 		cursor.draw(Mouse.getX(), HEIGHT-Mouse.getY());
