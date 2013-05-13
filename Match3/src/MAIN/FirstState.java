@@ -61,8 +61,9 @@ public class FirstState extends BasicGameState {
 			cursor = new Image("Content/ImageFiles/Cursor.png");
 			background = new Image("Content/ImageFiles/starBG.jpg");
 			
-			// print scores list for debugging
-			System.out.println(scoresList);
+			// retrieve the scores list and print it for debugging
+			scoresList=retrieveScores();
+			System.out.println("scores:\n" + scoresList);
 			
 			
 			}catch(SlickException e){}
@@ -100,14 +101,21 @@ public class FirstState extends BasicGameState {
 		//check for escape
 		if(input.isKeyDown(Input.KEY_ESCAPE))
 		{
-			// add score to the list
-			scoresList.addEntry(CH.getScoreObject());
+			// add score to the list and save the list
+			if (CH.getScoreObject() != null) {
+				scoresList.addEntry(CH.getScoreObject());
+				saveScores(scoresList);
+			}
 			container.exit();
 		}
 		
 		//gameover
 		if((int)CH.getTime().getTime() <= 0)
 		{
+			// add score to the list
+			scoresList.addEntry(CH.getScoreObject());
+			// save the scores list to the file
+			saveScores(scoresList);
 			game.enterState(2);
 		}
 		
@@ -149,6 +157,59 @@ public class FirstState extends BasicGameState {
 		
 	}
 	
+	/**
+	 * Retrieve the scores list. </br>
+	 * ScoresInfos object are serializable and are stored in the
+	 * file 'Content/Backups/scores.ser'.</br>
+	 * If the file does not exist, a new ScoresInfo object is instantiated,
+	 * since it is the first time the game runs locally. It returns
+	 * this new object.</br>
+	 * If the file exists, it retrieves and returns the ScoresInfo object
+	 *  saved in it.
+	 * @return ScoresInfo object that contains the scores list
+	 */
+	public static ScoresInfo retrieveScores() {
+		ScoresInfo list = null;
+		
+	    try {
+	      File f = new File("Content/Backups/scores.ser");
+	      if (f.exists()) {
+	    	  FileInputStream fichier = new FileInputStream(f);
+		      ObjectInputStream ois = new ObjectInputStream(fichier);
+		      list = (ScoresInfo) ois.readObject();
+	      } else {
+	    	  list = new ScoresInfo();
+	      }
+	      
+	    } 
+	    catch (java.io.IOException e) {
+	      e.printStackTrace();
+	    }
+	    catch (ClassNotFoundException e) {
+	      e.printStackTrace();
+	    }
+	    
+	    return list;
+	}
+	
+	/**
+	 * Save the scores list into the 'Content/Backups/scores.ser' file
+	 * (uses serialization)
+	 * @param list ScoresInfo object that stores the scores list
+	 */
+	public static void saveScores(ScoresInfo list) {
+	    try {
+	        FileOutputStream fichier 
+	           = new FileOutputStream("Content/Backups/scores.ser");
+	        ObjectOutputStream oos = new ObjectOutputStream(fichier);
+	        oos.writeObject(list);
+	        oos.flush();
+	        oos.close();
+	      }
+	      catch (java.io.IOException e) {
+	        e.printStackTrace();
+	      }
+	}
 	
 	public ScoresInfo getScore()
 	{

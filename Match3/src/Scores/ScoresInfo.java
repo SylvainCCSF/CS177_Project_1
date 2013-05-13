@@ -110,7 +110,7 @@ public class ScoresInfo implements java.io.Serializable {
 		String result = "";
 		
 		for (int i = 0; i <= lastIndex; i++) {
-			result += scoreList[i] + "\n";
+			result += (i+1) + " - " + scoreList[i] + "\n";
 		}
 		
 		return result;

@@ -38,14 +38,6 @@ public class ScoresState extends BasicGameState{
 		 try{
 				background = new Image("Content/ImageFiles/settings.png");
 				scoresList = retrieveScores();
-				
-				// add score to the list
-			//	scoresList.addEntry(CH.getScoreObject());
-				
-			//	game.getState(0).
-				
-				// save the score
-			//	saveScores(scoresList);
 				input = container.getInput();
 				}catch(SlickException e){}
 		
@@ -56,6 +48,9 @@ public class ScoresState extends BasicGameState{
 	{
 		
 		background.draw(0,0, WIDTH, HEIGHT);
+		g.drawString("SCORES", WIDTH * 0.5f, HEIGHT * 0.15f);
+		g.drawString(scoresList.toString(), WIDTH * 0.15f, HEIGHT * 0.25f);
+		g.drawString("press Enter to continue", WIDTH * 0.15f, HEIGHT * 0.95f);
 		
 	}
 
