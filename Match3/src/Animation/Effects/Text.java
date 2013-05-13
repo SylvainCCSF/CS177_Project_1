@@ -167,7 +167,7 @@ public class Text {
 		case '.': return 36;
 		case ':': return 36;
 		case '-': return 36;
-		default : return -1;
+		default : return 36;
 
 
 		}

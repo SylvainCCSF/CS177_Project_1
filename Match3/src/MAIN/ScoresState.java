@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -14,6 +15,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import Animation.Effects.Text;
 import Scores.ScoresInfo;
 
 
@@ -25,6 +28,7 @@ public class ScoresState extends BasicGameState{
 	private Image background;
 	private static ScoresInfo scoresList;
 	private Input input;
+	private Text text;
 	
 	
 	public ScoresState(float _WIDTH, float _HEIGHT)
@@ -39,6 +43,7 @@ public class ScoresState extends BasicGameState{
 				background = new Image("Content/ImageFiles/settings.png");
 				scoresList = retrieveScores();
 				input = container.getInput();
+				text = new Text();
 				}catch(SlickException e){}
 		
 	}
@@ -48,10 +53,18 @@ public class ScoresState extends BasicGameState{
 	{
 		
 		background.draw(0,0, WIDTH, HEIGHT);
-		g.drawString("SCORES", WIDTH * 0.45f, HEIGHT * 0.15f);
-		g.drawString(scoresList.toString(12), WIDTH * 0.15f, HEIGHT * 0.25f);
-		g.drawString("press Enter to continue", WIDTH * 0.15f, HEIGHT * 0.90f);
+
+		text.draw("High Scores", WIDTH * 0.35f, HEIGHT * 0.15f, WIDTH * 0.03f, WIDTH * 0.03f, Color.gray);
+		//text.draw(scoresList.toString(12), WIDTH * 0.15f, (HEIGHT * 0.25f), WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
+		text.draw("press Enter to continue", WIDTH * 0.15f, HEIGHT * 0.90f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
 		
+		
+		for(int i = 0; i < 12; i++)
+		{
+			text.draw(scoresList.getSingleScore(i), WIDTH * 0.05f,(HEIGHT * 0.25f) + (float)(i *(WIDTH * 0.03f)), WIDTH * 0.025f,WIDTH * 0.03f, Color.gray );
+			
+		}
+	
 	}
 
 	@Override

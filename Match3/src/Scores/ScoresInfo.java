@@ -131,4 +131,12 @@ public class ScoresInfo implements java.io.Serializable {
 		
 		return result;
 	}
+	
+	public String getSingleScore(int _index)
+	{
+		String result = scoreList[_index].toString();
+		return result;
+	}
+	
+	
 }

@@ -63,21 +63,20 @@ public class FirstState extends BasicGameState {
 		   try{
 			cursor = new Image("Content/ImageFiles/Cursor.png");
 			background = new Image("Content/ImageFiles/starBG.jpg");
-<<<<<<< HEAD
 			text = new Text();
 			// print scores list for debugging
 			System.out.println(scoresList);
-=======
 			
 			// retrieve the scores list and print it for debugging
 			scoresList=retrieveScores();
 			System.out.println("scores:\n" + scoresList);
->>>>>>> 6a0419a3cd519739a3d8373b0bfe3093f79ca544
 			
 			
 			}catch(SlickException e){}
 		    bgPoint1 = new Point(0,0);
 			bgPoint2 = new Point(0, (int)HEIGHT);
+			
+			System.out.println("REINIT()");
 	} 
 
 
@@ -99,12 +98,6 @@ public class FirstState extends BasicGameState {
 				backgroundMusic.play();
 			    } catch (OutOfRangeException e) {e.printStackTrace();}
 			   finally{ startMusic = false;}
-		}
-		
-		if(input.isKeyDown(Input.KEY_1))
-		{
-			startMusic = true;
-			game.enterState(0);
 		}
 		
 		//check for escape

@@ -22,7 +22,7 @@ public class Menu extends BasicGameState {
 	
 	public static final int ID = 0;
 	private final float WIDTH, HEIGHT;
-	private Button newGameButton, settingsButton, exitButton;
+	private Button newGameButton, exitButton;
 	private SoundTrack backgroundMusic;
 	private boolean startMusic = true;
 	private Image background, cursor;
@@ -36,7 +36,7 @@ public class Menu extends BasicGameState {
 		WIDTH = _WIDTH;
 		HEIGHT = _HEIGHT;
 		try{
-		background = new Image("Content/ImageFiles/MenuBG.jpg");
+		background = new Image("Content/ImageFiles/moon.png");
 		cursor = new Image("Content/ImageFiles/Cursor.png");
 		}catch(SlickException e){}
 	}
@@ -44,15 +44,14 @@ public class Menu extends BasicGameState {
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException
 	{
-		newGameButton = new Button(new Image("Content/ImageFiles/DotsFree.png"));
-		settingsButton = new Button(new Image("Content/ImageFiles/Cogs.png"));
+		newGameButton = new Button(new Image("Content/ImageFiles/SpaceOut.png"));
+		
 		exitButton = new Button(new Image("Content/ImageFiles/Exit.png"));
 			
 		//set buttonX value
 		newGameButton.setX((int)(WIDTH/2)-newGameButton.getWidthCenter());
-		newGameButton.setY( (int)(HEIGHT*.2f));
-		settingsButton.setX((int)(WIDTH/2)-settingsButton.getWidthCenter());
-		settingsButton.setY((int)(HEIGHT*.5f));
+		newGameButton.setY( (int)(HEIGHT*.35f));
+		
 		exitButton.setX((int)(WIDTH/2)-exitButton.getWidthCenter());
 		exitButton.setY((int)(HEIGHT*.8f));
 		
@@ -82,9 +81,6 @@ public class Menu extends BasicGameState {
 		newGameButton.checkIntersection(mouseRect);
 		newGameButton.Update(container, game, delta);
 		
-		settingsButton.checkIntersection(mouseRect);
-		settingsButton.Update(container, game, delta);
-		
 		exitButton.checkIntersection(mouseRect);
 		exitButton.Update(container, game, delta);
 		
@@ -109,10 +105,6 @@ public class Menu extends BasicGameState {
 		  game.enterState(1);
 		}
 		
-		if(settingsButton.isClicked())
-		{
-			
-		}
 		
 		if(exitButton.isClicked())
 		{
@@ -127,12 +119,11 @@ public class Menu extends BasicGameState {
 	{
 		background.draw(0, 0, WIDTH, HEIGHT);
 		newGameButton.render(container, game, g);
-		settingsButton.render(container, game, g);
 		exitButton.render(container, game, g);
 		
 		//draw text
-		text.draw("match 3", WIDTH * 0.10f, HEIGHT * 0.10f, WIDTH * 0.10f, HEIGHT * 0.10f , Color.red);
-		text.draw("match 3", WIDTH * 0.10f + 3, HEIGHT * 0.10f + 3, WIDTH * 0.10f, HEIGHT * 0.10f , Color.gray);
+		text.draw("match it", WIDTH * 0.15f, HEIGHT * 0.10f, WIDTH * 0.10f, HEIGHT * 0.10f , Color.red);
+		text.draw("match it", WIDTH * 0.15f + 3, HEIGHT * 0.10f + 3, WIDTH * 0.10f, HEIGHT * 0.10f , Color.gray);
 		
 		//the Cursor, draw last!
 		cursor.draw(Mouse.getX(), HEIGHT-Mouse.getY());
