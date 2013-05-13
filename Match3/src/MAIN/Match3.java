@@ -48,7 +48,7 @@ public class Match3 extends StateBasedGame {
 	{
 		this.addState(new Menu(WIDTH * SCALE_VALUE_WIDTH, HEIGHT * SCALE_VALUE_HEIGHT));
 		this.addState(new FirstState(WIDTH * SCALE_VALUE_WIDTH, HEIGHT * SCALE_VALUE_HEIGHT)); 
-		this.addState(new Score(WIDTH * SCALE_VALUE_WIDTH, HEIGHT * SCALE_VALUE_HEIGHT));
+		this.addState(new ScoresState(WIDTH * SCALE_VALUE_WIDTH, HEIGHT * SCALE_VALUE_HEIGHT));
 		this.addState(new GameOver(WIDTH * SCALE_VALUE_WIDTH, HEIGHT * SCALE_VALUE_HEIGHT));
 		this.enterState(MENU);  //enter first state
 	}
