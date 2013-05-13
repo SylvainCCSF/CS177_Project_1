@@ -55,14 +55,12 @@ public class ScoresState extends BasicGameState{
 		background.draw(0,0, WIDTH, HEIGHT);
 
 		text.draw("High Scores", WIDTH * 0.35f, HEIGHT * 0.15f, WIDTH * 0.03f, WIDTH * 0.03f, Color.gray);
-		//text.draw(scoresList.toString(12), WIDTH * 0.15f, (HEIGHT * 0.25f), WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
 		text.draw("press Enter to continue", WIDTH * 0.15f, HEIGHT * 0.90f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
 		
 		
 		for(int i = 0; i < 12; i++)
 		{
 			text.draw(scoresList.getSingleScore(i), WIDTH * 0.05f,(HEIGHT * 0.25f) + (float)(i *(WIDTH * 0.03f)), WIDTH * 0.025f,WIDTH * 0.03f, Color.gray );
-			
 		}
 	
 	}
@@ -70,11 +68,17 @@ public class ScoresState extends BasicGameState{
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
 	{
+		
+		
 		// get the most recent scores list
 		scoresList = retrieveScores();
 		if(input.isKeyPressed(Input.KEY_ENTER))
 		{
 			game.enterState(3);
+		}
+		if(input.isKeyDown(Input.KEY_ESCAPE))
+		{
+			container.exit();
 		}
 		
 		

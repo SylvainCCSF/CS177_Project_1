@@ -51,7 +51,8 @@ public class FirstState extends BasicGameState {
 
 
 	@Override //returns the state id for state switching
-	public int getID() {
+	public int getID()
+	{
 		return ID;
 	}
 
@@ -71,12 +72,11 @@ public class FirstState extends BasicGameState {
 			scoresList=retrieveScores();
 			System.out.println("scores:\n" + scoresList);
 			
-			
 			}catch(SlickException e){}
 		    bgPoint1 = new Point(0,0);
 			bgPoint2 = new Point(0, (int)HEIGHT);
-			
-			System.out.println("REINIT()");
+			CH.resetTimer();
+			startMusic = true;
 	} 
 
 
@@ -89,16 +89,18 @@ public class FirstState extends BasicGameState {
 		//Update the CardHandler
 		CH.update(container, game, delta);
 		
-		
+		//resets music
 		if(game.getCurrentStateID() == ID && startMusic)
 		{
 			   backgroundMusic = SoundTrack.TRACK_TWO;
 			try {
 				backgroundMusic.setVolume(0.3f);
 				backgroundMusic.play();
+				CH.resetTimer();
 			    } catch (OutOfRangeException e) {e.printStackTrace();}
 			   finally{ startMusic = false;}
 		}
+					
 		
 		//check for escape
 		if(input.isKeyDown(Input.KEY_ESCAPE))

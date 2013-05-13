@@ -13,6 +13,7 @@ public class CountDown extends org.lwjgl.util.Timer {
 	 */
 	public CountDown() {
 		this(30.0f);
+	
 	}
 	
 	/**
@@ -40,7 +41,7 @@ public class CountDown extends org.lwjgl.util.Timer {
 	
 	/**
 	 * Add time to the countdown (may positive or negative
-	 * for bonus or malus).
+	 * for bonus or minus).
 	 * @param timeToAdd number of seconds to add.
 	 */
 	public void addTime(float timeToAdd) {
@@ -54,4 +55,11 @@ public class CountDown extends org.lwjgl.util.Timer {
 	public String toString() {
 		return String.format("%5.1f",this.getTime());
 	}
+	
+	public void resetNow()
+	{
+		this.reset();
+	}
+	
+	
 }
