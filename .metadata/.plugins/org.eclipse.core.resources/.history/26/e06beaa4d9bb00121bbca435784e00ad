@@ -62,11 +62,12 @@ public class Particle {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 	{
 		
-			image.setCenterOfRotation(image.getWidth()/2, image.getHeight()/2);
-			image.setRotation(rotation);
-			image.draw( (float)x, (float)y, c);
-			
-
+		int red = (int)(Math.random()*256);
+		int green = (int)(Math.random()*256);
+		int blue = (int)(Math.random()*256);
+		image.setCenterOfRotation(image.getWidth()/2, image.getHeight()/2);
+		image.setRotation(rotation);
+		image.draw( (float)x, (float)y, new Color(red,green,blue));
 	}
 	
 	

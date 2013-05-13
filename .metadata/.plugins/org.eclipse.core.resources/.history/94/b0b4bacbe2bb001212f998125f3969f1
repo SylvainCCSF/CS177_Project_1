@@ -145,7 +145,7 @@ public class CardHandler {
 		//Draw additional time
 		if(addOne)
 		{
-			text.draw("+1 SECS", APPLET_WIDTH * 0.02f, APPLET_HEIGHT * 0.25f+TTL1, APPLET_WIDTH * 0.03f, APPLET_WIDTH * 0.03f, Color.red );
+			text.draw("+1 SECS", APPLET_WIDTH * 0.05f, APPLET_HEIGHT * 0.25f+TTL1, APPLET_WIDTH * 0.03f, APPLET_WIDTH * 0.03f, Color.red );
 			if(TTL1>50)
 			{
 				addOne=false;
@@ -154,7 +154,7 @@ public class CardHandler {
 		}
 		 if(addTwo)
 		{
-			text.draw("+2 SECS", APPLET_WIDTH * 0.02f, APPLET_HEIGHT * 0.35f+TTL2, APPLET_WIDTH * 0.03f, APPLET_WIDTH * 0.03f, Color.cyan );
+			text.draw("+2 SECS", APPLET_WIDTH * 0.05f, APPLET_HEIGHT * 0.35f+TTL2, APPLET_WIDTH * 0.03f, APPLET_WIDTH * 0.03f, Color.cyan );
 			if(TTL2>50)
 			{
 				addTwo=false;

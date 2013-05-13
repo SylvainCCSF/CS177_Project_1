@@ -45,7 +45,7 @@ public class CardHandler {
 	int gridSize = 8;
 	int maxX;
 	int maxY;
-	int additionalTime = 0, TTL1 = 0, TTL2=0;
+	int additionalTime = 0, TTL = 0;
 	private boolean isRunning = true, addOne=false, addTwo=false;
 	private boolean isSwapping = false;
 	private boolean isDropping = false;
@@ -145,27 +145,24 @@ public class CardHandler {
 		//Draw additional time
 		if(addOne)
 		{
-			text.draw("+1 SECS", APPLET_WIDTH * 0.02f, APPLET_HEIGHT * 0.25f+TTL1, APPLET_WIDTH * 0.03f, APPLET_WIDTH * 0.03f, Color.red );
-			if(TTL1>50)
+			text.draw("+1 SECS", APPLET_WIDTH * 0.05f, APPLET_HEIGHT * 0.90f+TTL, APPLET_WIDTH * 0.03f, APPLET_WIDTH * 0.03f, Color.pink );
+			if(TTL>50)
 			{
 				addOne=false;
 			}
-			TTL1++;
+			TTL++;
 		}
-		 if(addTwo)
+		else if(addTwo)
 		{
-			text.draw("+2 SECS", APPLET_WIDTH * 0.02f, APPLET_HEIGHT * 0.35f+TTL2, APPLET_WIDTH * 0.03f, APPLET_WIDTH * 0.03f, Color.cyan );
-			if(TTL2>50)
+			text.draw("+2 SECS", APPLET_WIDTH * 0.05f, APPLET_HEIGHT * 0.90f+TTL, APPLET_WIDTH * 0.03f, APPLET_WIDTH * 0.03f, Color.pink );
+			if(TTL>50)
 			{
 				addTwo=false;
 			}
-			TTL2++;
+			TTL++;
 		}
-	    if(!addOne && !addTwo)
-	    {
-		 TTL1=0;
-	     TTL2=0;
-	    }
+		else TTL=0;
+		
 		//draw selection
 		if (firstCard != null)
 		{

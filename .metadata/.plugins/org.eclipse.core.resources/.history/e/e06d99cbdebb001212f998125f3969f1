@@ -45,8 +45,8 @@ public class CardHandler {
 	int gridSize = 8;
 	int maxX;
 	int maxY;
-	int additionalTime = 0, TTL1 = 0, TTL2=0;
-	private boolean isRunning = true, addOne=false, addTwo=false;
+	int additionalTime = 0;
+	private boolean isRunning = true;
 	private boolean isSwapping = false;
 	private boolean isDropping = false;
 	private boolean madeMove = false;
@@ -112,15 +112,14 @@ public class CardHandler {
 		MovePieces();
 		// update countdown
 		countDown.tick();
-	
+		
+		
 		//update particles
 		for(int i = 0; i < particles.length; i++)
 		{
 			if(particles[i] != null)
 		    particles[i].update(container, game, delta);
 		}
-		
-		
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
@@ -143,29 +142,11 @@ public class CardHandler {
 		}
 		
 		//Draw additional time
-		if(addOne)
+		if(additionalTime > 0)
 		{
-			text.draw("+1 SECS", APPLET_WIDTH * 0.02f, APPLET_HEIGHT * 0.25f+TTL1, APPLET_WIDTH * 0.03f, APPLET_WIDTH * 0.03f, Color.red );
-			if(TTL1>50)
-			{
-				addOne=false;
-			}
-			TTL1++;
+			text.draw("" + additionalTime, APPLET_WIDTH * 0.05f, APPLET_HEIGHT * 0.90f, APPLET_WIDTH * 0.03f, APPLET_WIDTH * 0.03f, Color.pink );
 		}
-		 if(addTwo)
-		{
-			text.draw("+2 SECS", APPLET_WIDTH * 0.02f, APPLET_HEIGHT * 0.35f+TTL2, APPLET_WIDTH * 0.03f, APPLET_WIDTH * 0.03f, Color.cyan );
-			if(TTL2>50)
-			{
-				addTwo=false;
-			}
-			TTL2++;
-		}
-	    if(!addOne && !addTwo)
-	    {
-		 TTL1=0;
-	     TTL2=0;
-	    }
+		
 		//draw selection
 		if (firstCard != null)
 		{
@@ -207,15 +188,13 @@ public class CardHandler {
 			    if(countDown.getTime() < 3)
 				{
 					additionalTime = 1;
-					addOne = true;
+					
 				}
 				else if (countDown.getTime() < 5)
 				{
 					additionalTime = 2;
-					addTwo = true;
 				}
-		
-		
+			
 				// update score add time.
 				score.addToCurrent(1);
 				countDown.addTime(additionalTime);

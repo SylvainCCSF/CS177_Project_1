@@ -23,7 +23,6 @@ import Time.CountDown;
 
 import Animation.Particle;
 import Animation.ParticleHandler;
-import Animation.Effects.Text;
 import Audio.OutOfRangeException;
 import Audio.SoundEffect;
 //////////////////////////////////////////////////////
@@ -45,8 +44,7 @@ public class CardHandler {
 	int gridSize = 8;
 	int maxX;
 	int maxY;
-	int additionalTime = 0, TTL1 = 0, TTL2=0;
-	private boolean isRunning = true, addOne=false, addTwo=false;
+	private boolean isRunning = true;
 	private boolean isSwapping = false;
 	private boolean isDropping = false;
 	private boolean madeMove = false;
@@ -63,7 +61,6 @@ public class CardHandler {
 	private CountDown countDown;
 	private ParticleHandler[] particles;
 	private Score score;
-	private Text text;
 
 	//constructor
 	public CardHandler(float _APPLET_WIDTH, float _APPLET_HEIGHT)
@@ -91,7 +88,6 @@ public class CardHandler {
 		for (int i = 0; i < images.length; i++) {
 			try {
 				images[i] = new Image("Content/ImageFiles/" + i + ".png");
-				text = new Text();
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
@@ -112,15 +108,14 @@ public class CardHandler {
 		MovePieces();
 		// update countdown
 		countDown.tick();
-	
+		
+		
 		//update particles
 		for(int i = 0; i < particles.length; i++)
 		{
 			if(particles[i] != null)
 		    particles[i].update(container, game, delta);
 		}
-		
-		
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
@@ -135,37 +130,13 @@ public class CardHandler {
 			}
 		}
 		
-		//Draw Particles
 		for(int i = 0; i < particles.length; i++)
 		{
 			if(particles[i] != null)
 				particles[i].render(container, game, g);
 		}
 		
-		//Draw additional time
-		if(addOne)
-		{
-			text.draw("+1 SECS", APPLET_WIDTH * 0.02f, APPLET_HEIGHT * 0.25f+TTL1, APPLET_WIDTH * 0.03f, APPLET_WIDTH * 0.03f, Color.red );
-			if(TTL1>50)
-			{
-				addOne=false;
-			}
-			TTL1++;
-		}
-		 if(addTwo)
-		{
-			text.draw("+2 SECS", APPLET_WIDTH * 0.02f, APPLET_HEIGHT * 0.35f+TTL2, APPLET_WIDTH * 0.03f, APPLET_WIDTH * 0.03f, Color.cyan );
-			if(TTL2>50)
-			{
-				addTwo=false;
-			}
-			TTL2++;
-		}
-	    if(!addOne && !addTwo)
-	    {
-		 TTL1=0;
-	     TTL2=0;
-	    }
+		
 		//draw selection
 		if (firstCard != null)
 		{
@@ -202,20 +173,17 @@ public class CardHandler {
 				int x = a.x;
 				int y = a.y;
 				
-				additionalTime = 0;
+				int additionalTime = 0;
 				
 			    if(countDown.getTime() < 3)
 				{
 					additionalTime = 1;
-					addOne = true;
 				}
 				else if (countDown.getTime() < 5)
 				{
 					additionalTime = 2;
-					addTwo = true;
 				}
-		
-		
+			
 				// update score add time.
 				score.addToCurrent(1);
 				countDown.addTime(additionalTime);
