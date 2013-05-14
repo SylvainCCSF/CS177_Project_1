@@ -60,8 +60,10 @@ public class ScoresState extends BasicGameState{
 		text.draw("press Enter to continue", WIDTH * 0.15f, HEIGHT * 0.90f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
 		text.draw("press Enter to continue", WIDTH * 0.15f+3, HEIGHT * 0.90f+3,  WIDTH * 0.03f,WIDTH * 0.03f, Color.black );
 		
-		
-		for(int i = 0; i < 12; i++)
+		int indexOfLastScoreInList = scoresList.getLastIndex();
+		int indexOfLastDisplayedScore = 11 < indexOfLastScoreInList ?
+				                        12 : indexOfLastScoreInList + 1;
+		for(int i = 0; i < indexOfLastDisplayedScore; i++)
 		{
 			text.draw(scoresList.getSingleScore(i), WIDTH * 0.05f,(HEIGHT * 0.25f) + (float)(i *(WIDTH * 0.03f)), WIDTH * 0.025f,WIDTH * 0.03f, Color.gray );
 		}

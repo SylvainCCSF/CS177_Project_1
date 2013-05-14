@@ -85,6 +85,15 @@ public class ScoresInfo implements java.io.Serializable {
 	}
 	
 	/**
+	 * Get the last index, that means the index of the 
+	 * last score stored in the array
+	 * @return integer value of the index of the last score in the array
+	 */
+	public int getLastIndex() {
+		return lastIndex;
+	}
+	
+	/**
 	 * Double the size of the array that stores the score
 	 * (needed if this array is full)
 	 */
@@ -132,6 +141,11 @@ public class ScoresInfo implements java.io.Serializable {
 		return result;
 	}
 	
+	/**
+	 * returns a score as a string ginven its index in the list
+	 * @param _index the given index
+	 * @return a string describing the score at the given index
+	 */
 	public String getSingleScore(int _index)
 	{
 		String result = scoreList[_index].toString();
