@@ -123,11 +123,11 @@ public class ScoresDemo {
 		// test ScoresInfo addEntry(), toString
 		displayTest("ScoresInfo addEntry and toString methods");
 		System.out.print("adding entry... ");
-		System.out.println(list.addEntry(score1) ?
+		System.out.println(list.addEntry(score1) == 0 ?
 				            "new record!" :
 				            "no record...");
 		System.out.print("adding entry... ");
-		System.out.println(list.addEntry(score2) ?
+		System.out.println(list.addEntry(score2) == 0 ?
 	            "new record!" :
 	            "no record...");
 		System.out.println(list);
@@ -141,27 +141,27 @@ public class ScoresDemo {
 		Score score7 = new Score("player7"); score7.setScore(856);
 		Score score8 = new Score("player8"); score8.setScore(1050);
 		System.out.print("adding entry... ");
-		System.out.println(list.addEntry(score3) ?
+		System.out.println(list.addEntry(score3) == 0 ?
 	            "new record!" :
 	            "no record...");
 		System.out.print("adding entry... ");
-		System.out.println(list.addEntry(score4) ?
+		System.out.println(list.addEntry(score4) == 0 ?
 	            "new record!" :
 	            "no record...");
 		System.out.print("adding entry... ");
-		System.out.println(list.addEntry(score5) ?
+		System.out.println(list.addEntry(score5) == 0 ?
 	            "new record!" :
 	            "no record...");
 		System.out.print("adding entry... ");
-		System.out.println(list.addEntry(score6) ?
+		System.out.println(list.addEntry(score6) == 0 ?
 	            "new record!" :
 	            "no record...");
 		System.out.print("adding entry... ");
-		System.out.println(list.addEntry(score7) ?
+		System.out.println(list.addEntry(score7) == 0 ?
 	            "new record!" :
 	            "no record...");
 		System.out.print("adding entry... ");
-		System.out.println(list.addEntry(score8) ?
+		System.out.println(list.addEntry(score8) == 0 ?
 	            "new record!" :
 	            "no record...");
 		System.out.println(list);

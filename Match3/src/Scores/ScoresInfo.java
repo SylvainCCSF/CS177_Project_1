@@ -9,19 +9,21 @@ public class ScoresInfo implements java.io.Serializable {
 	public static final int DEFAULT_ARRAY_SIZE = 20;
 	private Score[] scoreList;
 	private int lastIndex;  // index of the last entry in the list 
+	private int lastScoreIndex; // index of the last score added to the list
 	
 	public ScoresInfo() {
 		scoreList = new Score[DEFAULT_ARRAY_SIZE];
 		lastIndex = -1;
+		lastScoreIndex = 0;
 	}
 	
 	/**
-	 * Add a score to the scores list
+	 * Add a score to the scores list and return the index of 
+	 * the place where this score was added
 	 * @param newScore score to add
-	 * @return 'true' is the score is a new record
-	 *         'false' otherwise
+	 * @return lastScoreIndex
 	 */
-	public boolean addEntry(Score newScore) {
+	public int addEntry(Score newScore) {
 		lastIndex++; //update the index of the last entry in the list
 		//System.out.println("lastIndex: "+lastIndex);
 		// check if list's size needs to be increase
@@ -38,6 +40,7 @@ public class ScoresInfo implements java.io.Serializable {
 				scoreList[currentIndex + 1] = scoreList[currentIndex];
 			else {
 				scoreList[currentIndex + 1] = newScore;
+				lastScoreIndex = currentIndex + 1;
 				done = true;
 			}
 			currentIndex--;
@@ -46,10 +49,10 @@ public class ScoresInfo implements java.io.Serializable {
 		// the new score has not been added to the list: it's a new record!
 		if (!done) {
 			scoreList[0] = newScore;
-			isHighest = true;
+			lastScoreIndex = 0;
 		}
 		
-		return isHighest;
+		return lastScoreIndex;
 	}
 	
 	/**
@@ -93,6 +96,13 @@ public class ScoresInfo implements java.io.Serializable {
 		return lastIndex;
 	}
 	
+	/**
+	 * Get the index of the last score added
+	 * @return the index of the score that was last added
+	 */
+	public int getLastScoreIndex() {
+		return lastScoreIndex;
+	}
 	/**
 	 * Double the size of the array that stores the score
 	 * (needed if this array is full)

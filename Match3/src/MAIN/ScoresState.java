@@ -63,9 +63,17 @@ public class ScoresState extends BasicGameState{
 		int indexOfLastScoreInList = scoresList.getLastIndex();
 		int indexOfLastDisplayedScore = 11 < indexOfLastScoreInList ?
 				                        12 : indexOfLastScoreInList + 1;
+		int indexOfLastAddedScore = scoresList.getLastScoreIndex();
+		
+		Color lineColor;
 		for(int i = 0; i < indexOfLastDisplayedScore; i++)
 		{
-			text.draw(scoresList.getSingleScore(i), WIDTH * 0.05f,(HEIGHT * 0.25f) + (float)(i *(WIDTH * 0.03f)), WIDTH * 0.025f,WIDTH * 0.03f, Color.gray );
+			lineColor = i == indexOfLastAddedScore ? Color.red : Color.gray;
+			text.draw(scoresList.getSingleScore(i), WIDTH * 0.05f,(HEIGHT * 0.25f) + (float)(i *(WIDTH * 0.03f)), WIDTH * 0.025f,WIDTH * 0.03f, lineColor);
+		}
+		
+		if (indexOfLastAddedScore == 0) {
+			text.draw("!!! NEW RECORD !!!", WIDTH * 0.15f, HEIGHT * 0.85f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.green );
 		}
 	
 	}
