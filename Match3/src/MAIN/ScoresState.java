@@ -71,14 +71,16 @@ public class ScoresState extends BasicGameState{
 		Color lineColor;
 		for(int i = 0; i < indexOfLastDisplayedScore; i++)
 		{
-			lineColor = i == indexOfLastAddedScore ? Color.red : Color.darkGray;
+			lineColor = i == indexOfLastAddedScore ? Color.orange : Color.darkGray;
 			text.draw(scoresList.getSingleScore(i), WIDTH * 0.05f,(HEIGHT * 0.25f) + (float)(i *(WIDTH * 0.03f)), WIDTH * 0.025f,WIDTH * 0.03f, lineColor);
 		}
 		
 		if (indexOfLastAddedScore == 0) {
-
+<<<<<<< HEAD
 			text.draw("!!! NEW RECORD !!!", WIDTH * 0.05f, HEIGHT * 0.18f,  WIDTH * 0.05f,WIDTH * 0.05f, Color.green );
-
+=======
+// 			text.draw(":::: NEW RECORD ::::", WIDTH * 0.15f, HEIGHT * 0.75f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.green );
+>>>>>>> Add a name state
 		}
 	
 	}

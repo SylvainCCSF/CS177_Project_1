@@ -160,6 +160,7 @@ public class NameState extends BasicGameState {
 	      } else {
 	    	  list = new ScoresInfo();
 	      }
+	      
 	    } 
 	    catch (java.io.IOException e) {
 	      e.printStackTrace();
