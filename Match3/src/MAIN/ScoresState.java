@@ -73,7 +73,7 @@ public class ScoresState extends BasicGameState{
 		}
 		
 		if (indexOfLastAddedScore == 0) {
-			text.draw("!!! NEW RECORD !!!", WIDTH * 0.15f, HEIGHT * 0.85f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.green );
+			text.draw("!!! NEW RECORD !!!", WIDTH * 0.05f, HEIGHT * 0.18f,  WIDTH * 0.05f,WIDTH * 0.05f, Color.green );
 		}
 	
 	}

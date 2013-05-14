@@ -166,7 +166,7 @@ public class FirstState extends BasicGameState {
 		text.draw("SCORE: " + CH.getScoreAmount(), WIDTH * 0.25f+3, HEIGHT * 0.15f+3, WIDTH * 0.02f, WIDTH * 0.02f, Color.red );
 		
 		//press escape to exit
-		text.draw("Press escape to exit", 0, HEIGHT * 0.95f, WIDTH * 0.03f, WIDTH * 0.03f, Color.white);
+		text.draw("Press escape to exit", WIDTH * 0.22f, HEIGHT * 0.95f, WIDTH * 0.03f, WIDTH * 0.03f, Color.white);
 		
 		cursor.draw(Mouse.getX(), HEIGHT-Mouse.getY());
 		
