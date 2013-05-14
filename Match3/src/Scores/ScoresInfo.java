@@ -10,11 +10,13 @@ public class ScoresInfo implements java.io.Serializable {
 	private Score[] scoreList;
 	private int lastIndex;  // index of the last entry in the list 
 	private int lastScoreIndex; // index of the last score added to the list
+	private String currentPlayerName;
 	
 	public ScoresInfo() {
 		scoreList = new Score[DEFAULT_ARRAY_SIZE];
 		lastIndex = -1;
 		lastScoreIndex = 0;
+		currentPlayerName = "player 1";
 	}
 	
 	/**
@@ -160,6 +162,47 @@ public class ScoresInfo implements java.io.Serializable {
 	{
 		String result = scoreList[_index].toString();
 		return result;
+	}
+	
+	/**
+	 * Returns the score object associated with an index
+	 * @param index references the score object in the array
+	 * @return score object corresponding to the matching index
+	 *         or 'null' if index is how of range
+	 */
+	public Score getScoreObject(int index) {
+		if (index > 0 && index <= lastIndex) {
+			return scoreList[index];
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * Set the player name in a score corresponding to a given index
+	 * @param index references the score object in the array
+	 * @param name name to be changed
+	 */
+	public void setScoreName(int index, String name) {
+		if (index > 0 && index <= lastIndex) {
+			scoreList[index].setPlayerName(name);
+		}
+	}
+	
+	/**
+	 * Set the name of the current player
+	 * @param name of the current player
+	 */
+	public void setCurrentPlayerName(String name) {
+		currentPlayerName = name;
+	}
+	
+	/**
+	 * Get the name of the current player
+	 * @return name of the current player
+	 */
+	public String getCurrentPLayerName() {
+		return currentPlayerName;
 	}
 	
 	

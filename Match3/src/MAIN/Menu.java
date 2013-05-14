@@ -58,16 +58,16 @@ public class Menu extends BasicGameState {
 		exitButton.setY((int)(HEIGHT*.8f));
 		
 		
-		       // initialize and launch the background music
-				backgroundMusic = SoundTrack.TRACK_ONE;
-				
-				try {
-					backgroundMusic.setVolume(.9f);
-					backgroundMusic.play();
-					text = new Text();
-				} catch (OutOfRangeException e) {
-					e.printStackTrace();
-				}
+       // initialize and launch the background music
+		backgroundMusic = SoundTrack.TRACK_ONE;
+		
+		try {
+			backgroundMusic.setVolume(.9f);
+			backgroundMusic.play();
+			text = new Text();
+		} catch (OutOfRangeException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

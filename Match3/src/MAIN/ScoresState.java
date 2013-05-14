@@ -54,8 +54,8 @@ public class ScoresState extends BasicGameState{
 		
 		background.draw(0,0, WIDTH, HEIGHT);
 
-		text.draw("High Scores", WIDTH * 0.35f, HEIGHT * 0.15f, WIDTH * 0.03f, WIDTH * 0.03f, Color.gray);
-		text.draw("High Scores", WIDTH * 0.35f+2, HEIGHT * 0.15f+2, WIDTH * 0.03f, WIDTH * 0.03f, Color.black);
+		text.draw("High Scores", WIDTH * 0.15f, HEIGHT * 0.15f, WIDTH * 0.06f, WIDTH * 0.06f, Color.gray);
+		text.draw("High Scores", WIDTH * 0.15f+2, HEIGHT * 0.15f+2, WIDTH * 0.06f, WIDTH * 0.06f, Color.black);
 		
 		text.draw("press N to enter name", WIDTH * 0.15f, HEIGHT * 0.85f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
 		text.draw("press N to enter name", WIDTH * 0.15f+2, HEIGHT * 0.85f+2,  WIDTH * 0.03f,WIDTH * 0.03f, Color.black );
@@ -71,16 +71,14 @@ public class ScoresState extends BasicGameState{
 		Color lineColor;
 		for(int i = 0; i < indexOfLastDisplayedScore; i++)
 		{
-			lineColor = i == indexOfLastAddedScore ? Color.orange : Color.darkGray;
+			lineColor = i == indexOfLastAddedScore ? Color.red : Color.darkGray;
 			text.draw(scoresList.getSingleScore(i), WIDTH * 0.05f,(HEIGHT * 0.25f) + (float)(i *(WIDTH * 0.03f)), WIDTH * 0.025f,WIDTH * 0.03f, lineColor);
 		}
 		
 		if (indexOfLastAddedScore == 0) {
-<<<<<<< HEAD
-			text.draw("!!! NEW RECORD !!!", WIDTH * 0.05f, HEIGHT * 0.18f,  WIDTH * 0.05f,WIDTH * 0.05f, Color.green );
-=======
-// 			text.draw(":::: NEW RECORD ::::", WIDTH * 0.15f, HEIGHT * 0.75f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.green );
->>>>>>> Add a name state
+
+			text.draw("--::: NEW RECORD :::--", WIDTH * 0.05f, HEIGHT * 0.18f,  WIDTH * 0.05f,WIDTH * 0.05f, Color.green );
+
 		}
 	
 	}

@@ -24,6 +24,7 @@ import Animation.Effects.Text;
 import Audio.OutOfRangeException;
 import Audio.SoundTrack;
 import GUI.Button;
+import Scores.Score;
 import Scores.ScoresInfo;
 
 
@@ -40,6 +41,7 @@ public class NameState extends BasicGameState {
 	
 	private ScoresInfo scoresList;
 	private String name;
+	private final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
 	
 	private Text text;
@@ -59,11 +61,19 @@ public class NameState extends BasicGameState {
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException
 	{		
-		// initialize and launch the background music
-		backgroundMusic = SoundTrack.TRACK_ONE;
 		
 		// get the last scores list
 		scoresList = retrieveScores();
+		
+		// set the name to void string
+		if (scoresList.getCurrentPLayerName() != null)
+			name = scoresList.getCurrentPLayerName();
+		else
+			name = "";
+		
+		// initialize and launch the background music
+		backgroundMusic = SoundTrack.TRACK_ONE;
+
 		
 		try {
 			backgroundMusic.setVolume(.9f);
@@ -78,7 +88,12 @@ public class NameState extends BasicGameState {
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
-	{
+	{	
+		// scale + dimension
+		int alphabetWidth = 650;
+		int pad = 50;
+		float scale = (float) (WIDTH - 2 * pad) / alphabetWidth;
+
 		//start music
 		if(game.getCurrentStateID() == ID && startMusic)
 		{
@@ -100,14 +115,49 @@ public class NameState extends BasicGameState {
 		// catch keys pressed
 		if(input.isKeyPressed(Input.KEY_ENTER))
 		{
-			game.enterState(2, new FadeOutTransition(Color.darkGray, 1000), new FadeInTransition(Color.white, 300) );
+			// change the name of the current player in the scores list
+			int indexCurrentPlayer = scoresList.getLastScoreIndex();
+			scoresList.setScoreName(indexCurrentPlayer, name);
+			scoresList.setCurrentPlayerName(name);
+			
+			// save the list
+			saveScores(scoresList);
+			
+			// change state
+			game.enterState(2, new FadeOutTransition(Color.darkGray, 500), 
+					           new FadeInTransition(Color.white, 500) );
 		}
 		
 		if(input.isKeyPressed(Input.KEY_ESCAPE))
-		{
+		{	
 			container.exit();
 		}
 		
+		if(input.isMousePressed(0)){
+			char c = 'A';
+			int x = input.getMouseX();
+			int y = input.getMouseY();
+			
+			int letterWidth = Math.round(50 * scale);
+			int xInGrid = x - pad;
+			int yInGrid = y - pad;
+			int position = xInGrid / letterWidth 
+					       + 13 * (yInGrid / letterWidth);
+			
+			// update the name (no more then 10 characters)
+			if (position < ALPHABET.length() && name.length() < 10) {
+				c = ALPHABET.charAt(position);
+				name += c;
+			}
+			
+			System.out.println(x + " " + y + ": " + c + "/pos=" + position);
+		}
+		
+		// delete the last character of name string
+		if (input.isKeyPressed(Input.KEY_DELETE)) {
+			if (name.length() > 0)
+				name = name.substring(0, name.length() - 1);
+		}
 		
 	}
 
@@ -120,11 +170,16 @@ public class NameState extends BasicGameState {
 		int alphabetWidth = 650;
 		int pad = 50;
 		float scale = (float) (WIDTH - 2 * pad) / alphabetWidth;
-		
+		// draw alphabet
 		alphabet.draw(pad, pad, scale, Color.darkGray);
 		
+		// display the name
+		text.draw(name,  WIDTH * 0.15f, HEIGHT * 0.60f,  WIDTH * 0.05f,WIDTH * 0.05f, Color.red );
+		text.draw(name,  WIDTH * 0.15f+2, HEIGHT * 0.60f+2,  WIDTH * 0.05f,WIDTH * 0.05f, Color.darkGray );
+		
+		// display message for enter
 		text.draw("press Enter to continue", WIDTH * 0.15f, HEIGHT * 0.90f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
-		text.draw("press Enter to continue", WIDTH * 0.15f+3, HEIGHT * 0.90f+3,  WIDTH * 0.03f,WIDTH * 0.03f, Color.black );
+		text.draw("press Enter to continue", WIDTH * 0.15f+2, HEIGHT * 0.90f+2,  WIDTH * 0.03f,WIDTH * 0.03f, Color.black );
 		
 		//the Cursor, draw last!
 		cursor.draw(Mouse.getX(), HEIGHT-Mouse.getY());
