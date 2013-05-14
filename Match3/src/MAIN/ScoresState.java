@@ -40,7 +40,7 @@ public class ScoresState extends BasicGameState{
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		 try{
-				background = new Image("Content/ImageFiles/settings.png");
+				background = new Image("Content/ImageFiles/Bricks2.png");
 				scoresList = retrieveScores();
 				input = container.getInput();
 				text = new Text();
@@ -55,10 +55,13 @@ public class ScoresState extends BasicGameState{
 		background.draw(0,0, WIDTH, HEIGHT);
 
 		text.draw("High Scores", WIDTH * 0.35f, HEIGHT * 0.15f, WIDTH * 0.03f, WIDTH * 0.03f, Color.gray);
-		text.draw("High Scores", WIDTH * 0.35f+3, HEIGHT * 0.15f+3, WIDTH * 0.03f, WIDTH * 0.03f, Color.black);
+		text.draw("High Scores", WIDTH * 0.35f+2, HEIGHT * 0.15f+2, WIDTH * 0.03f, WIDTH * 0.03f, Color.black);
 		
+		text.draw("press N to enter name", WIDTH * 0.15f, HEIGHT * 0.85f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
+		text.draw("press N to enter name", WIDTH * 0.15f+2, HEIGHT * 0.85f+2,  WIDTH * 0.03f,WIDTH * 0.03f, Color.black );
+
 		text.draw("press Enter to continue", WIDTH * 0.15f, HEIGHT * 0.90f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
-		text.draw("press Enter to continue", WIDTH * 0.15f+3, HEIGHT * 0.90f+3,  WIDTH * 0.03f,WIDTH * 0.03f, Color.black );
+		text.draw("press Enter to continue", WIDTH * 0.15f+2, HEIGHT * 0.90f+2,  WIDTH * 0.03f,WIDTH * 0.03f, Color.black );
 		
 		int indexOfLastScoreInList = scoresList.getLastIndex();
 		int indexOfLastDisplayedScore = 11 < indexOfLastScoreInList ?
@@ -68,12 +71,16 @@ public class ScoresState extends BasicGameState{
 		Color lineColor;
 		for(int i = 0; i < indexOfLastDisplayedScore; i++)
 		{
-			lineColor = i == indexOfLastAddedScore ? Color.red : Color.gray;
+			lineColor = i == indexOfLastAddedScore ? Color.orange : Color.darkGray;
 			text.draw(scoresList.getSingleScore(i), WIDTH * 0.05f,(HEIGHT * 0.25f) + (float)(i *(WIDTH * 0.03f)), WIDTH * 0.025f,WIDTH * 0.03f, lineColor);
 		}
 		
 		if (indexOfLastAddedScore == 0) {
+<<<<<<< HEAD
 			text.draw("!!! NEW RECORD !!!", WIDTH * 0.05f, HEIGHT * 0.18f,  WIDTH * 0.05f,WIDTH * 0.05f, Color.green );
+=======
+// 			text.draw(":::: NEW RECORD ::::", WIDTH * 0.15f, HEIGHT * 0.75f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.green );
+>>>>>>> Add a name state
 		}
 	
 	}
@@ -93,7 +100,10 @@ public class ScoresState extends BasicGameState{
 		{
 			container.exit();
 		}
-		
+		if(input.isKeyDown(Input.KEY_N))
+		{
+			game.enterState(4);
+		}		
 		
 	}
 
