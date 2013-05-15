@@ -59,7 +59,7 @@ public class Menu extends BasicGameState {
 		
 		
        // initialize and launch the background music
-		backgroundMusic = SoundTrack.TRACK_ONE;
+		backgroundMusic = SoundTrack.TRACK_THREE;
 		
 		try {
 			backgroundMusic.setVolume(.9f);
@@ -89,15 +89,15 @@ public class Menu extends BasicGameState {
 		
 		
 		//start music
-		if(game.getCurrentStateID() == ID && startMusic)
-		{
-		 backgroundMusic = SoundTrack.TRACK_THREE;
-			try {
-				backgroundMusic.setVolume(0.3f);
-				backgroundMusic.play();
-			    } catch (OutOfRangeException e) {e.printStackTrace();}
-			finally{   startMusic = false;}
-		}
+//		if(game.getCurrentStateID() == ID && startMusic)
+//		{
+//		 backgroundMusic = SoundTrack.TRACK_THREE;
+//			try {
+//				backgroundMusic.setVolume(0.3f);
+//				backgroundMusic.play();
+//			    } catch (OutOfRangeException e) {e.printStackTrace();}
+//			finally{   startMusic = false;}
+//		}
 		
 		//switch to GameState with NEWGAMEBUTTON check
 		if (newGameButton.isClicked())

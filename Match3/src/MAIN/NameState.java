@@ -66,13 +66,13 @@ public class NameState extends BasicGameState {
 		scoresList = retrieveScores();
 		
 		// set the name to void string
-		if (scoresList.getCurrentPLayerName() != null)
-			name = scoresList.getCurrentPLayerName();
+		if (scoresList.getCurrentPlayerName() != null)
+			name = scoresList.getCurrentPlayerName();
 		else
 			name = "";
 		
 		// initialize and launch the background music
-		backgroundMusic = SoundTrack.TRACK_ONE;
+		backgroundMusic = SoundTrack.TRACK_THREE;
 
 		
 		try {
@@ -94,7 +94,7 @@ public class NameState extends BasicGameState {
 		int pad = 50;
 		float scale = (float) (WIDTH - 2 * pad) / alphabetWidth;
 
-		//start music
+		//reset music
 		if(game.getCurrentStateID() == ID && startMusic)
 		{
 		 backgroundMusic = SoundTrack.TRACK_THREE;
@@ -115,10 +115,18 @@ public class NameState extends BasicGameState {
 		// catch keys pressed
 		if(input.isKeyPressed(Input.KEY_ENTER))
 		{
+			// get the last scores list
+			scoresList = retrieveScores();
+			
 			// change the name of the current player in the scores list
-			int indexCurrentPlayer = scoresList.getLastScoreIndex();
-			scoresList.setScoreName(indexCurrentPlayer, name);
+			int indexCurrentScore = scoresList.getLastScoreIndex();
+			System.out.println(" score index: " + indexCurrentScore);
+			scoresList.setScoreName(indexCurrentScore, name);
+			System.out.println(" current score (with new name):\n"
+					+ scoresList.getSingleScore(indexCurrentScore));
 			scoresList.setCurrentPlayerName(name);
+			System.out.println("current player: " 
+			        + scoresList.getCurrentPlayerName());
 			
 			// save the list
 			saveScores(scoresList);

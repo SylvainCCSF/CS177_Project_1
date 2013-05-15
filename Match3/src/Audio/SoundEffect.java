@@ -61,7 +61,7 @@ public enum SoundEffect {
 	 * Volume setter
 	 * @param vol float between 0.0f and 1.0f
 	 */
-	public void setVolume(float vol) throws OutOfRangeException{
+	public static void setVolume(float vol) throws OutOfRangeException{
 		// define exception
 		OutOfRangeException problem = 
 				new OutOfRangeException ("Input value is out of range " +

@@ -17,6 +17,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import Animation.Effects.Text;
+import Audio.OutOfRangeException;
+import Audio.SoundTrack;
 import Scores.ScoresInfo;
 
 
@@ -29,6 +31,9 @@ public class ScoresState extends BasicGameState{
 	private static ScoresInfo scoresList;
 	private Input input;
 	private Text text;
+	private SoundTrack backgroundMusic;
+	private boolean startMusic = true;
+
 	
 	
 	public ScoresState(float _WIDTH, float _HEIGHT)
@@ -75,10 +80,9 @@ public class ScoresState extends BasicGameState{
 			text.draw(scoresList.getSingleScore(i), WIDTH * 0.05f,(HEIGHT * 0.25f) + (float)(i *(WIDTH * 0.03f)), WIDTH * 0.025f,WIDTH * 0.03f, lineColor);
 		}
 		
+		// check for a new record
 		if (indexOfLastAddedScore == 0) {
-
-			text.draw("--::: NEW RECORD :::--", WIDTH * 0.05f, HEIGHT * 0.18f,  WIDTH * 0.05f,WIDTH * 0.05f, Color.green );
-
+			text.draw("NEW RECORD", WIDTH * 0.2f, HEIGHT * 0.75f,  WIDTH * 0.05f,WIDTH * 0.05f, Color.green );
 		}
 	
 	}
@@ -86,7 +90,16 @@ public class ScoresState extends BasicGameState{
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
 	{
-		
+		//resets music
+		if(game.getCurrentStateID() == ID && startMusic)
+		{
+			backgroundMusic = SoundTrack.TRACK_THREE;
+			try {
+				backgroundMusic.play();
+				backgroundMusic.setVolume(0.3f);
+			} catch (OutOfRangeException e) {e.printStackTrace();}
+			finally{ startMusic = false;}
+		}
 		
 		// get the most recent scores list
 		scoresList = retrieveScores();

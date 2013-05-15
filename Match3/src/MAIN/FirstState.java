@@ -22,8 +22,10 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import Animation.Effects.Text;
 import Audio.OutOfRangeException;
+import Audio.SoundEffect;
 import Audio.SoundTrack;
 import GameObjectHandler.CardHandler;
+import Scores.Score;
 import Scores.ScoresInfo;
 
 
@@ -67,11 +69,10 @@ public class FirstState extends BasicGameState {
 			cursor = new Image("Content/ImageFiles/Cursor.png");
 			background = new Image("Content/ImageFiles/starBG.jpg");
 			text = new Text();
-			// print scores list for debugging
-			System.out.println(scoresList);
 			
 			// retrieve the scores list and print it for debugging
 			scoresList=retrieveScores();
+			// print scores for debugging
 			System.out.println("scores:\n" + scoresList);
 			
 			}catch(SlickException e){}
@@ -85,7 +86,7 @@ public class FirstState extends BasicGameState {
 	@Override // update the cardHandler -> cardHandler.update() pls keep this method as clean as possible
 	public void update( GameContainer container, StateBasedGame game, int delta ) throws SlickException
 	{
-
+		Score currentScore = new Score();
 	    input = container.getInput();
 		
 		//Update the CardHandler
@@ -94,13 +95,14 @@ public class FirstState extends BasicGameState {
 		//resets music
 		if(game.getCurrentStateID() == ID && startMusic)
 		{
-			   backgroundMusic = SoundTrack.TRACK_TWO;
+			backgroundMusic = SoundTrack.TRACK_TWO;
 			try {
-				backgroundMusic.setVolume(0.3f);
 				backgroundMusic.play();
+				backgroundMusic.setVolume(0.2f);
+				SoundEffect.setVolume(0.8f);
 				CH.resetTimer();
-			    } catch (OutOfRangeException e) {e.printStackTrace();}
-			   finally{ startMusic = false;}
+			} catch (OutOfRangeException e) {e.printStackTrace();}
+			finally{ startMusic = false;}
 		}
 					
 		
@@ -108,8 +110,11 @@ public class FirstState extends BasicGameState {
 		if(input.isKeyDown(Input.KEY_ESCAPE))
 		{
 			// add score to the list and save the list
-			if (CH.getScoreObject() != null) {
-				scoresList.addEntry(CH.getScoreObject());
+			currentScore = CH.getScoreObject();
+			if ( currentScore != null && currentScore.getScore() != 0) {
+				currentScore.setPlayerName(scoresList.getCurrentPlayerName());
+				scoresList.addEntry(currentScore);
+				// save the scores list to the file
 				saveScores(scoresList);
 			}
 			container.exit();
@@ -119,7 +124,9 @@ public class FirstState extends BasicGameState {
 		if(CH.getTime().getTime() <= 0)
 		{
 			// add score to the list
-			scoresList.addEntry(CH.getScoreObject());
+			currentScore = CH.getScoreObject();
+			currentScore.setPlayerName(scoresList.getCurrentPlayerName());
+			scoresList.addEntry(currentScore);
 			// save the scores list to the file
 			saveScores(scoresList);
 			
@@ -160,10 +167,10 @@ public class FirstState extends BasicGameState {
 		CH.render(container, game, g);
 		// countdown
 		
-		text.draw("" + CH.getTime() , WIDTH * 0.5f,  HEIGHT * 0.10f, WIDTH * 0.07f, WIDTH * 0.07f, Color.pink);
+		text.draw("" + CH.getTime() , WIDTH * 0.65f,  HEIGHT * 0.1f, WIDTH * 0.05f, WIDTH * 0.05f, Color.pink);
 		
 		// score
-		text.draw("SCORE: " + CH.getScoreAmount(), WIDTH * 0.25f+3, HEIGHT * 0.15f+3, WIDTH * 0.02f, WIDTH * 0.02f, Color.red );
+		text.draw("SCORE: " + CH.getScoreAmount(), WIDTH * 0.1f, HEIGHT * 0.1f, WIDTH * 0.05f, WIDTH * 0.05f, Color.red );
 		
 		//press escape to exit
 		text.draw("Press escape to exit", WIDTH * 0.22f, HEIGHT * 0.95f, WIDTH * 0.03f, WIDTH * 0.03f, Color.white);

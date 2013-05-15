@@ -184,7 +184,7 @@ public class ScoresInfo implements java.io.Serializable {
 	 * @param name name to be changed
 	 */
 	public void setScoreName(int index, String name) {
-		if (index > 0 && index <= lastIndex) {
+		if (index >= 0 && index <= lastIndex) {
 			scoreList[index].setPlayerName(name);
 		}
 	}
@@ -201,7 +201,7 @@ public class ScoresInfo implements java.io.Serializable {
 	 * Get the name of the current player
 	 * @return name of the current player
 	 */
-	public String getCurrentPLayerName() {
+	public String getCurrentPlayerName() {
 		return currentPlayerName;
 	}
 	
