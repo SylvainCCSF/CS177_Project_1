@@ -167,13 +167,13 @@ public class FirstState extends BasicGameState {
 		CH.render(container, game, g);
 		// countdown
 		
-		text.draw("" + CH.getTime() , WIDTH * 0.65f,  HEIGHT * 0.1f, WIDTH * 0.05f, WIDTH * 0.05f, Color.pink);
+		text.draw("" + CH.getTime() , WIDTH * 0.75f,  HEIGHT * 0.1f, WIDTH * 0.05f, WIDTH * 0.05f, Color.pink);
 		
 		// score
 		text.draw("SCORE: " + CH.getScoreAmount(), WIDTH * 0.1f, HEIGHT * 0.1f, WIDTH * 0.05f, WIDTH * 0.05f, Color.red );
 		
 		//press escape to exit
-		text.draw("Press escape to exit", WIDTH * 0.22f, HEIGHT * 0.95f, WIDTH * 0.03f, WIDTH * 0.03f, Color.white);
+		text.draw("Press escape to exit", WIDTH * 0.25f, HEIGHT * 0.95f, WIDTH * 0.03f, WIDTH * 0.03f, Color.darkGray);
 		
 		cursor.draw(Mouse.getX(), HEIGHT-Mouse.getY());
 		

@@ -59,14 +59,14 @@ public class ScoresState extends BasicGameState{
 		
 		background.draw(0,0, WIDTH, HEIGHT);
 
-		text.draw("High Scores", WIDTH * 0.15f, HEIGHT * 0.15f, WIDTH * 0.06f, WIDTH * 0.06f, Color.gray);
-		text.draw("High Scores", WIDTH * 0.15f+2, HEIGHT * 0.15f+2, WIDTH * 0.06f, WIDTH * 0.06f, Color.black);
+		text.draw("High Scores", WIDTH * 0.13f, HEIGHT * 0.10f, WIDTH * 0.1f, WIDTH * 0.1f, Color.darkGray);
+		//text.draw("High Scores", WIDTH * 0.15f+2, HEIGHT * 0.15f+2, WIDTH * 0.06f, WIDTH * 0.06f, Color.black);
 		
-		text.draw("press N to enter name", WIDTH * 0.15f, HEIGHT * 0.85f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
-		text.draw("press N to enter name", WIDTH * 0.15f+2, HEIGHT * 0.85f+2,  WIDTH * 0.03f,WIDTH * 0.03f, Color.black );
+		text.draw("press N to enter name", WIDTH * 0.25f, HEIGHT * 0.85f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
+		//text.draw("press N to enter name", WIDTH * 0.15f+2, HEIGHT * 0.85f+2,  WIDTH * 0.03f,WIDTH * 0.03f, Color.black );
 
-		text.draw("press Enter to continue", WIDTH * 0.15f, HEIGHT * 0.90f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
-		text.draw("press Enter to continue", WIDTH * 0.15f+2, HEIGHT * 0.90f+2,  WIDTH * 0.03f,WIDTH * 0.03f, Color.black );
+		text.draw("press Enter to continue", WIDTH * 0.25f, HEIGHT * 0.90f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
+		//text.draw("press Enter to continue", WIDTH * 0.15f+2, HEIGHT * 0.90f+2,  WIDTH * 0.03f,WIDTH * 0.03f, Color.black );
 		
 		int indexOfLastScoreInList = scoresList.getLastIndex();
 		int indexOfLastDisplayedScore = 11 < indexOfLastScoreInList ?
@@ -77,12 +77,12 @@ public class ScoresState extends BasicGameState{
 		for(int i = 0; i < indexOfLastDisplayedScore; i++)
 		{
 			lineColor = i == indexOfLastAddedScore ? Color.red : Color.darkGray;
-			text.draw(scoresList.getSingleScore(i), WIDTH * 0.05f,(HEIGHT * 0.25f) + (float)(i *(WIDTH * 0.03f)), WIDTH * 0.025f,WIDTH * 0.03f, lineColor);
+			text.draw(scoresList.getSingleScore(i), WIDTH * 0.15f,(HEIGHT * 0.25f) + (float)(i *(WIDTH * 0.03f)), WIDTH * 0.035f,WIDTH * 0.035f, lineColor);
 		}
 		
 		// check for a new record
 		if (indexOfLastAddedScore == 0) {
-			text.draw("NEW RECORD", WIDTH * 0.2f, HEIGHT * 0.75f,  WIDTH * 0.05f,WIDTH * 0.05f, Color.green );
+			text.draw("NEW RECORD", WIDTH * 0.3f, HEIGHT * 0.75f,  WIDTH * 0.05f,WIDTH * 0.05f, Color.green );
 		}
 	
 	}

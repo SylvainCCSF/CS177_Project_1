@@ -29,7 +29,7 @@ public class Text {
 	public void init() throws SlickException
 	{
 		try{
-			image =new SpriteSheet( new Image("Content/ImageFiles/FontsTrans.png"), (int)width, (int)height);
+			image =new SpriteSheet( new Image("Content/ImageFiles/fonts_trans.png"), (int)width, (int)height);
 
 		}catch(SlickException e){}
 	}
@@ -92,7 +92,7 @@ public class Text {
 				sprite = image.getSubImage( characterArray[i]-26,2);
 			}
 
-			sprite.draw(x+=width,y, width, height, color);
+			sprite.draw(x+=width*0.7,y, width, height, color);
 		}
 
 	}
@@ -164,8 +164,8 @@ public class Text {
 		case '9': return 34;
 		case '0': return 35;
 		case ' ': return 36;
-		case '.': return 36;
-		case ':': return 36;
+		case '<': return 37;
+		case '>': return 38;
 		case '-': return 36;
 		default : return 36;
 

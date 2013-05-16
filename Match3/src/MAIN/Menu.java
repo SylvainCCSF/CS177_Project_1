@@ -38,7 +38,7 @@ public class Menu extends BasicGameState {
 		WIDTH = _WIDTH;
 		HEIGHT = _HEIGHT;
 		try{
-		background = new Image("Content/ImageFiles/moon.png");
+		background = new Image("Content/ImageFiles/Bricks2.png");
 		cursor = new Image("Content/ImageFiles/Cursor.png");
 		}catch(SlickException e){}
 	}
@@ -46,9 +46,9 @@ public class Menu extends BasicGameState {
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException
 	{
-		newGameButton = new Button(new Image("Content/ImageFiles/SpaceOut.png"));
+		newGameButton = new Button(new Image("Content/ImageFiles/enterButton.png"));
 		
-		exitButton = new Button(new Image("Content/ImageFiles/Exit.png"));
+		exitButton = new Button(new Image("Content/ImageFiles/exitButton.png"));
 			
 		//set buttonX value
 		newGameButton.setX((int)(WIDTH/2)-newGameButton.getWidthCenter());
@@ -125,8 +125,8 @@ public class Menu extends BasicGameState {
 		exitButton.render(container, game, g);
 		
 		//draw text
-		text.draw("match it", WIDTH * 0.15f, HEIGHT * 0.10f, WIDTH * 0.10f, HEIGHT * 0.10f , Color.red);
-		text.draw("match it", WIDTH * 0.15f + 3, HEIGHT * 0.10f + 3, WIDTH * 0.10f, HEIGHT * 0.10f , Color.gray);
+		text.draw("match it", WIDTH * 0.12f, HEIGHT * 0.10f, WIDTH * 0.14f, HEIGHT * 0.14f , Color.black);
+		//text.draw("match it", WIDTH * 0.15f + 3, HEIGHT * 0.10f + 3, WIDTH * 0.10f, HEIGHT * 0.10f , Color.gray);
 		
 		//the Cursor, draw last!
 		cursor.draw(Mouse.getX(), HEIGHT-Mouse.getY());

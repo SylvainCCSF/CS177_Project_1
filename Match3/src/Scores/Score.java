@@ -130,7 +130,7 @@ public class Score implements Comparable<Score>,
 	 */
 	public String toString() {
 		SimpleDateFormat formattedDate = new SimpleDateFormat ("dd-MM-yyyy");
-		String result = String.format("%-10s %10d   %s",
+		String result = String.format("%-10s %5d   %s",
 				                      playerName, 
 				                      currentScore, 
 				                      formattedDate.format(scoreDate));
