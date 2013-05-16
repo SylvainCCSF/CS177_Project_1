@@ -162,7 +162,7 @@ public class NameState extends BasicGameState {
 		}
 		
 		// delete the last character of name string
-		if (input.isKeyPressed(Input.KEY_DELETE)) {
+		if (input.isKeyPressed(Input.KEY_BACK)) {
 			if (name.length() > 0)
 				name = name.substring(0, name.length() - 1);
 		}
