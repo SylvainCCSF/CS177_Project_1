@@ -38,7 +38,7 @@ public class Menu extends BasicGameState {
 		WIDTH = _WIDTH;
 		HEIGHT = _HEIGHT;
 		try{
-		background = new Image("Content/ImageFiles/Bricks2.png");
+		background = new Image("Content/ImageFiles/welcome.png");
 		cursor = new Image("Content/ImageFiles/Cursor.png");
 		}catch(SlickException e){}
 	}
@@ -52,7 +52,7 @@ public class Menu extends BasicGameState {
 			
 		//set buttonX value
 		newGameButton.setX((int)(WIDTH/2)-newGameButton.getWidthCenter());
-		newGameButton.setY( (int)(HEIGHT*.35f));
+		newGameButton.setY( (int)(HEIGHT*.55f));
 		
 		exitButton.setX((int)(WIDTH/2)-exitButton.getWidthCenter());
 		exitButton.setY((int)(HEIGHT*.8f));
@@ -85,19 +85,7 @@ public class Menu extends BasicGameState {
 		
 		exitButton.checkIntersection(mouseRect);
 		exitButton.Update(container, game, delta);
-		
-		
-		
-		//start music
-//		if(game.getCurrentStateID() == ID && startMusic)
-//		{
-//		 backgroundMusic = SoundTrack.TRACK_THREE;
-//			try {
-//				backgroundMusic.setVolume(0.3f);
-//				backgroundMusic.play();
-//			    } catch (OutOfRangeException e) {e.printStackTrace();}
-//			finally{   startMusic = false;}
-//		}
+
 		
 		//switch to GameState with NEWGAMEBUTTON check
 		if (newGameButton.isClicked())
@@ -125,7 +113,7 @@ public class Menu extends BasicGameState {
 		exitButton.render(container, game, g);
 		
 		//draw text
-		text.draw("match it", WIDTH * 0.12f, HEIGHT * 0.10f, WIDTH * 0.14f, HEIGHT * 0.14f , Color.black);
+		//text.draw("match it", WIDTH * 0.12f, HEIGHT * 0.10f, WIDTH * 0.14f, HEIGHT * 0.14f , Color.black);
 		//text.draw("match it", WIDTH * 0.15f + 3, HEIGHT * 0.10f + 3, WIDTH * 0.10f, HEIGHT * 0.10f , Color.gray);
 		
 		//the Cursor, draw last!

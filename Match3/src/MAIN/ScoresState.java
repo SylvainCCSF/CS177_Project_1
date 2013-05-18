@@ -45,7 +45,7 @@ public class ScoresState extends BasicGameState{
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		 try{
-				background = new Image("Content/ImageFiles/Bricks2.png");
+				background = new Image("Content/ImageFiles/high_scores.png");
 				scoresList = retrieveScores();
 				input = container.getInput();
 				text = new Text();
@@ -59,7 +59,7 @@ public class ScoresState extends BasicGameState{
 		
 		background.draw(0,0, WIDTH, HEIGHT);
 
-		text.draw("High Scores", WIDTH * 0.13f, HEIGHT * 0.10f, WIDTH * 0.1f, WIDTH * 0.1f, Color.darkGray);
+		//text.draw("High Scores", WIDTH * 0.13f, HEIGHT * 0.10f, WIDTH * 0.1f, WIDTH * 0.1f, Color.darkGray);
 		//text.draw("High Scores", WIDTH * 0.15f+2, HEIGHT * 0.15f+2, WIDTH * 0.06f, WIDTH * 0.06f, Color.black);
 		
 		text.draw("press N to enter name", WIDTH * 0.25f, HEIGHT * 0.85f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );

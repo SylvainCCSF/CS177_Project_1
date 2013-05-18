@@ -38,7 +38,7 @@ public class FirstState extends BasicGameState {
 	private SoundTrack backgroundMusic;
 	private boolean startMusic = true;
 	private Image cursor;
-	private Image background;
+	private Image movingBackground, fixedBackground;
 	private Point bgPoint1, bgPoint2;
 	private static ScoresInfo scoresList;
 	private  Input input;
@@ -67,7 +67,8 @@ public class FirstState extends BasicGameState {
 		CH.init();
 		   try{
 			cursor = new Image("Content/ImageFiles/Cursor.png");
-			background = new Image("Content/ImageFiles/starBG.jpg");
+			movingBackground = new Image("Content/ImageFiles/moving_background.png");
+			fixedBackground = new Image("Content/ImageFiles/Bricks2.png");
 			text = new Text();
 			
 			// retrieve the scores list and print it for debugging
@@ -77,7 +78,7 @@ public class FirstState extends BasicGameState {
 			
 			}catch(SlickException e){}
 		    bgPoint1 = new Point(0,0);
-			bgPoint2 = new Point(0, (int)HEIGHT);
+			bgPoint2 = new Point(0, -(int)HEIGHT);
 			CH.resetTimer();
 			startMusic = true;
 	} 
@@ -139,16 +140,16 @@ public class FirstState extends BasicGameState {
 		
 		//update Background
 		
-		bgPoint1.y -= (int)((60 / CH.getTime().getTime()));
-	    bgPoint2.y -= (int)(60 / (CH.getTime().getTime()));
+		bgPoint1.y += (int)((60 / CH.getTime().getTime()));
+	    bgPoint2.y += (int)(60 / (CH.getTime().getTime()));
 		
-		if(bgPoint1.y < -HEIGHT)
+		if(bgPoint1.y > HEIGHT)
 		{
-		  bgPoint1.y = (int)HEIGHT;
+		  bgPoint1.y = 0;
 		}
-		if(bgPoint2.y < -HEIGHT)
+		if(bgPoint2.y > 0)
 		{
-			bgPoint2.y = (int)HEIGHT;
+			bgPoint2.y = -(int)HEIGHT;
 		}
 		
 	} 
@@ -159,21 +160,23 @@ public class FirstState extends BasicGameState {
 	{ 
 
 		//draw background
-		background.draw(bgPoint1.x, bgPoint1.y,WIDTH, HEIGHT, Color.cyan);
-		background.draw(bgPoint2.x, bgPoint2.y,WIDTH, HEIGHT, Color.cyan);
+		fixedBackground.draw(0, 0, WIDTH, HEIGHT);
+		movingBackground.draw(bgPoint1.x, bgPoint1.y,WIDTH, HEIGHT);
+		movingBackground.draw(bgPoint2.x, bgPoint2.y,WIDTH, HEIGHT);
+		
 		
 
 		//Render the Card Handler
 		CH.render(container, game, g);
 		// countdown
 		
-		text.draw("" + CH.getTime() , WIDTH * 0.75f,  HEIGHT * 0.1f, WIDTH * 0.05f, WIDTH * 0.05f, Color.pink);
+		text.draw("" + CH.getTime() , WIDTH * 0.75f,  HEIGHT * 0.1f, WIDTH * 0.05f, WIDTH * 0.05f, Color.black);
 		
 		// score
 		text.draw("SCORE: " + CH.getScoreAmount(), WIDTH * 0.1f, HEIGHT * 0.1f, WIDTH * 0.05f, WIDTH * 0.05f, Color.red );
 		
 		//press escape to exit
-		text.draw("Press escape to exit", WIDTH * 0.25f, HEIGHT * 0.95f, WIDTH * 0.03f, WIDTH * 0.03f, Color.darkGray);
+		text.draw("Press escape to exit", WIDTH * 0.25f, HEIGHT * 0.95f, WIDTH * 0.03f, WIDTH * 0.03f, Color.gray);
 		
 		cursor.draw(Mouse.getX(), HEIGHT-Mouse.getY());
 		

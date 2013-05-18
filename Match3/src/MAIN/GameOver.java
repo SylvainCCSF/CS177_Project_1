@@ -34,7 +34,7 @@ public class GameOver extends BasicGameState{
 	{
 
 		try{
-			background = new Image("Content/ImageFiles/GameOver.png");
+			background = new Image("Content/ImageFiles/game_over.png");
 			text = new Text();
 		}catch(SlickException e){}
 
@@ -60,14 +60,11 @@ public class GameOver extends BasicGameState{
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException
 	{
-
 		background.draw(0, 0, WIDTH, HEIGHT);
 		
-		text.draw("Press ESC to Escape", WIDTH * 0.25f,  HEIGHT * 0.75f, WIDTH * 0.03f, WIDTH * 0.03f, Color.gray );
-	//	g.drawString("Press ESC to ESCAPE", WIDTH * 0.25f, HEIGHT * 0.75f);
+		text.draw("Press ESC to Escape", WIDTH * 0.25f,  HEIGHT * 0.8f, WIDTH * 0.03f, WIDTH * 0.03f, Color.gray );
 		
-		text.draw("Press ENTER to CONTINUE",WIDTH * 0.25f,HEIGHT * 0.65f, WIDTH * 0.03f, WIDTH * 0.03f,   Color.gray );
-	//	g.drawString("Press ENTER to CONTINUE", WIDTH * 0.25f, HEIGHT * 0.65f);
+		text.draw("Press ENTER to CONTINUE",WIDTH * 0.25f,HEIGHT * 0.75f, WIDTH * 0.03f, WIDTH * 0.03f,   Color.gray );
 	}
 
 	
