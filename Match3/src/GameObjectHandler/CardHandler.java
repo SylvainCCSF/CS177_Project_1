@@ -1,6 +1,5 @@
 package GameObjectHandler;
 
-
 import java.util.ArrayList;
 import java.awt.Point;
 import java.io.File;
@@ -16,6 +15,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.InputAdapter;
 
 import Scores.Score;
 import Scores.ScoresInfo;
@@ -50,13 +50,14 @@ public class CardHandler {
 	private boolean isSwapping = false;
 	private boolean isDropping = false;
 	private boolean madeMove = false;
+	private boolean hasSwiped = false;
 	double gDeltaTime = 0;
 	double moveRate = 5;
 	Card firstCard;
 	boolean updateGrid=false;
 	int numImages = 6;
 	Card[][] grid;
-	private int mouseX, mouseY;
+	private int mouseX, mouseY, startX, startY;
 	private boolean currentClick = false;
 	private Image[] images;
 	private float playingTime;
@@ -130,8 +131,9 @@ public class CardHandler {
 				Card card = grid[i][j];
 				Image image = images[card.getCardType()];
 				float y = (float)card.drawY;
-				
-				image.draw(card.x*cardSize+offsetX, y*cardSize+offsetY, imageScale);
+				float x = (float)card.drawX;
+
+				image.draw(x*cardSize+offsetX, y*cardSize+offsetY, imageScale);
 			}
 		}
 		
@@ -289,11 +291,12 @@ public class CardHandler {
 						
 						//move left
 					}else if (card.drawX < col){
+						System.out.println(card.drawX + " drawX" + " x: "+card.x+ " y: " + card.y);
 						card.drawX = card.drawX + moveRate*gDeltaTime;
 						madeMove=true;
 						
 						//move right
-					}else if (card.drawX < col){
+					}else if (card.drawX > col){
 						card.drawX = card.drawX - moveRate*gDeltaTime;
 						madeMove=true;
 					}
@@ -302,10 +305,19 @@ public class CardHandler {
 			}
 		}
 		if(!madeMove){
+			if(isDropping){
+				isDropping=false;
+			}
+			
+			if(isSwapping){
+				isSwapping=false;
+			}
 			FindAndRemoveMatches();
 		}
 	}
 	
+
+		
 	public void SwapCards(Card a, Card b){
 		Card temp = a.clone();
 		a.x = b.x;
@@ -324,19 +336,36 @@ public class CardHandler {
 	
 	public void GetInput()
 	{
+		if(madeMove){
+			return;
+		}
+		mouseX = Mouse.getX();
+		mouseY = Mouse.getY();
+		
+		//swiping
+		if(currentClick == true && hasSwiped == false){
+			double swipeDistance = Math.sqrt(  Math.pow((double)(mouseY-startY),2) + Math.pow((double)(mouseX-startX),2) );
+			if( swipeDistance > cardSize){
+				mouseClicked(Mouse.getX(), Mouse.getY());
+				hasSwiped=true;
+				
+			}
+		
+		}
+		
+		
 		if (Mouse.isButtonDown(0) && currentClick==false){
-			mouseX = Mouse.getX();
-			mouseY = Mouse.getY();
-			mouseClicked(mouseX, mouseY);
+			mouseClicked(Mouse.getX(), Mouse.getY());
+			startX = Mouse.getX();
+			startY = Mouse.getY();
 			currentClick=true;
 		}else if(!Mouse.isButtonDown(0)){
+			hasSwiped=false;
 			currentClick=false;
 		}
 	}
 	
 	public void mouseClicked(int clickX, int clickY) {
-		
-	
 		
 		clickY = (int)APPLET_HEIGHT - clickY;
 		Point pnt = new Point(clickX, clickY);
@@ -370,6 +399,7 @@ public class CardHandler {
 		
 		//swap cards
 		}else if(isAdjacent(firstCard, clickCard)){
+			isSwapping=true;
 			
 			SwapCards(firstCard, clickCard);
 			
@@ -379,9 +409,7 @@ public class CardHandler {
 				firstCard = null;
 			//if there is a match
 			}else{
-				
 				firstCard = null;
-				FindAndRemoveMatches();
 			}
 		}
 	}
@@ -458,6 +486,8 @@ public class CardHandler {
 		}
 		return match;
 	}	
+	
+	
 	
 	/**
 	 * Getter for the countdown
