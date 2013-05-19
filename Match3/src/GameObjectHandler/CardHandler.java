@@ -291,7 +291,6 @@ public class CardHandler {
 						
 						//move left
 					}else if (card.drawX < col){
-						System.out.println(card.drawX + " drawX" + " x: "+card.x+ " y: " + card.y);
 						card.drawX = card.drawX + moveRate*gDeltaTime;
 						madeMove=true;
 						
