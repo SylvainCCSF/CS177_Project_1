@@ -408,7 +408,6 @@ public class CardHandler {
 			//if there is a match
 			}else{
 				firstCard = null;
-				SoundEffect.SWAP.play();
 			}
 		}
 	}
