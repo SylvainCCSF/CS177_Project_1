@@ -132,23 +132,25 @@ public class FirstState extends BasicGameState {
 			saveScores(scoresList);
 			
 			game.enterState(2, new FadeOutTransition(Color.red, 1000), new FadeInTransition(Color.red, 300) );
-			
-			//game.enterState(2);
 		}
 		
 		
 		
 		//update Background
-		
-		bgPoint1.y += (int)((60 / CH.getTime().getTime()));
-	    bgPoint2.y += (int)(60 / (CH.getTime().getTime()));
+		float time = CH.getTime().getTime();
+		int dTime = (int)(time > 3.0f ? time : 3);
+		int yShift = 60 / dTime;
+		bgPoint1.y += yShift;
+	    bgPoint2.y += yShift;
 		
 		if(bgPoint1.y > HEIGHT)
 		{
-		  bgPoint1.y = 0;
+			bgPoint1.x = bgPoint2.x;
+			bgPoint1.y = 0;
 		}
 		if(bgPoint2.y > 0)
 		{
+			bgPoint2.x = (int)((-0.5 + Math.random()) * WIDTH);
 			bgPoint2.y = -(int)HEIGHT;
 		}
 		
