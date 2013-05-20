@@ -16,6 +16,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import Animation.Effects.Text;
 import Audio.OutOfRangeException;
+import Audio.SoundEffect;
 import Audio.SoundTrack;
 import GUI.Button;
 
@@ -90,15 +91,16 @@ public class Menu extends BasicGameState {
 		//switch to GameState with NEWGAMEBUTTON check
 		if (newGameButton.isClicked())
 		{
-		  startMusic = true;
-		  game.getState(1).init(container, game);
-		  game.enterState(1, new FadeOutTransition(Color.black, 500), new FadeInTransition(Color.black, 500) );
-		//  game.enterState(1);
+			SoundEffect.BUTTON_ON.play();
+			startMusic = true;
+			game.getState(1).init(container, game);
+			game.enterState(1, new FadeOutTransition(Color.black, 500), new FadeInTransition(Color.black, 500) );
 		}
 		
 		
 		if(exitButton.isClicked())
 		{
+			SoundEffect.BUTTON_OFF.play();
 			container.exit();
 		}
 		

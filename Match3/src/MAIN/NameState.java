@@ -22,6 +22,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import Animation.Effects.Text;
 import Audio.OutOfRangeException;
+import Audio.SoundEffect;
 import Audio.SoundTrack;
 import GUI.Button;
 import Scores.Score;
@@ -93,17 +94,6 @@ public class NameState extends BasicGameState {
 		int alphabetWidth = 650;
 		int pad = 50;
 		float scale = (float) (WIDTH - 2 * pad) / alphabetWidth;
-
-		//reset music
-		if(game.getCurrentStateID() == ID && startMusic)
-		{
-		 backgroundMusic = SoundTrack.TRACK_THREE;
-			try {
-				backgroundMusic.setVolume(0.3f);
-				backgroundMusic.play();
-			    } catch (OutOfRangeException e) {e.printStackTrace();}
-			finally{   startMusic = false;}
-		}
 		
         //getMouse Input
 		mouseRect.x = Mouse.getX();
@@ -114,7 +104,9 @@ public class NameState extends BasicGameState {
 
 		// catch keys pressed
 		if(input.isKeyPressed(Input.KEY_ENTER))
+		
 		{
+			SoundEffect.VALIDATION.play();
 			// get the last scores list
 			scoresList = retrieveScores();
 			
@@ -141,6 +133,7 @@ public class NameState extends BasicGameState {
 		}
 		
 		if(input.isMousePressed(0)){
+			SoundEffect.SELECT.play();
 			char c = 'A';
 			int x = input.getMouseX();
 			int y = input.getMouseY();
@@ -162,6 +155,7 @@ public class NameState extends BasicGameState {
 		
 		// delete the last character of name string
 		if (input.isKeyPressed(Input.KEY_BACK)) {
+			SoundEffect.BAD.play();
 			if (name.length() > 0)
 				name = name.substring(0, name.length() - 1);
 		}

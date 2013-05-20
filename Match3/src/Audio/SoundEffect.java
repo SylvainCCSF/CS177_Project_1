@@ -23,7 +23,7 @@ public enum SoundEffect {
 	EXPLODE("explode.wav"),
 	MENU_CLOSE("menu_close.wav"),
 	MENU_OPEN("menu_open.wav"),
-	PAUSE("pause.wav"),
+	VALIDATION("pause.wav"),
 	REWARD("reward.wav"),
 	SELECT("select.wav"),
 	SPECIAL_EVENT("special_event.wav"),
@@ -41,7 +41,6 @@ public enum SoundEffect {
 	 * @param soundFileName name of the sound file (String)
 	 */
 	SoundEffect(String soundFileName) {
-		
 		try {
 
 			effect = new Sound("Content/SoundClips/" + soundFileName);

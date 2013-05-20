@@ -12,6 +12,9 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import Animation.Effects.Text;
+import Audio.OutOfRangeException;
+import Audio.SoundEffect;
+import Audio.SoundTrack;
 
 public class GameOver extends BasicGameState{
 
@@ -20,6 +23,7 @@ public class GameOver extends BasicGameState{
 	private Image background;
 	private Input input;
     private Text text;
+    private SoundTrack backgroundMusic;
 
 	public GameOver(float _WIDTH, float _HEIGHT)
 	{
@@ -32,11 +36,21 @@ public class GameOver extends BasicGameState{
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)throws SlickException 
 	{
-
 		try{
 			background = new Image("Content/ImageFiles/game_over.png");
 			text = new Text();
 		}catch(SlickException e){}
+		
+       // initialize and launch the background music
+		backgroundMusic = SoundTrack.TRACK_THREE;
+		
+		try {
+			backgroundMusic.setVolume(.9f);
+			backgroundMusic.play();
+			text = new Text();
+		} catch (OutOfRangeException e) {
+			e.printStackTrace();
+		}
 
 	}
 	@Override
@@ -51,6 +65,7 @@ public class GameOver extends BasicGameState{
 
 		if(input.isKeyPressed(Input.KEY_ENTER))
 		{
+			SoundEffect.VALIDATION.play();
 			game.enterState(0);
 		}
 	}

@@ -99,7 +99,7 @@ public class FirstState extends BasicGameState {
 			backgroundMusic = SoundTrack.TRACK_TWO;
 			try {
 				backgroundMusic.play();
-				backgroundMusic.setVolume(0.2f);
+				backgroundMusic.setVolume(0.1f);
 				SoundEffect.setVolume(0.8f);
 				CH.resetTimer();
 			} catch (OutOfRangeException e) {e.printStackTrace();}
@@ -169,9 +169,7 @@ public class FirstState extends BasicGameState {
 		//Render the Card Handler
 		CH.render(container, game, g);
 		// countdown
-		
 		text.draw("" + CH.getTime() , WIDTH * 0.75f,  HEIGHT * 0.1f, WIDTH * 0.05f, WIDTH * 0.05f, Color.black);
-		
 		// score
 		text.draw("SCORE: " + CH.getScoreAmount(), WIDTH * 0.1f, HEIGHT * 0.1f, WIDTH * 0.05f, WIDTH * 0.05f, Color.red );
 		

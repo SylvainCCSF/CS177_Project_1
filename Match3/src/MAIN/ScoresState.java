@@ -18,6 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import Animation.Effects.Text;
 import Audio.OutOfRangeException;
+import Audio.SoundEffect;
 import Audio.SoundTrack;
 import Scores.ScoresInfo;
 
@@ -49,7 +50,18 @@ public class ScoresState extends BasicGameState{
 				scoresList = retrieveScores();
 				input = container.getInput();
 				text = new Text();
-				}catch(SlickException e){}
+		}catch(SlickException e){}
+		 
+       // initialize and launch the background music
+		backgroundMusic = SoundTrack.TRACK_THREE;
+		
+		try {
+			backgroundMusic.setVolume(.9f);
+			backgroundMusic.play();
+			text = new Text();
+		} catch (OutOfRangeException e) {
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -105,6 +117,7 @@ public class ScoresState extends BasicGameState{
 		scoresList = retrieveScores();
 		if(input.isKeyPressed(Input.KEY_ENTER))
 		{
+			SoundEffect.VALIDATION.play();
 			game.enterState(3);
 		}
 		if(input.isKeyDown(Input.KEY_ESCAPE))
@@ -113,6 +126,7 @@ public class ScoresState extends BasicGameState{
 		}
 		if(input.isKeyDown(Input.KEY_N))
 		{
+			SoundEffect.VALIDATION.play();
 			game.enterState(4);
 		}		
 		

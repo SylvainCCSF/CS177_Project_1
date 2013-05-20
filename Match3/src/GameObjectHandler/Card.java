@@ -23,8 +23,8 @@ import org.newdawn.slick.geom.Rectangle;
 			y = _y;
 			
 	//When commented out the board scrolls down upon creation
-	//		drawX = (double)_x;
-	//		drawY = (double)_y;
+			drawX = (double)_x;
+			drawY = (double)_y;
 			cardType = _cardType;
 			boundingRectangle = new Rectangle( y * 50, x * 50, 50, 50);
 		}
