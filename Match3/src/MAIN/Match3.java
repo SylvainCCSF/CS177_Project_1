@@ -16,7 +16,7 @@ public class Match3 extends StateBasedGame {
 	//declare the name of the applet and add the first state
 	public Match3(float _WIDTH, float _HEIGHT)
 	{
-		super("Tutorial Applet");
+		super("Match It");
 		
 	}
 	
