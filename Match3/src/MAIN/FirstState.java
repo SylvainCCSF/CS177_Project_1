@@ -15,6 +15,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -38,11 +39,13 @@ public class FirstState extends BasicGameState {
 	private SoundTrack backgroundMusic;
 	private boolean startMusic = true;
 	private Image cursor;
-	private Image movingBackground, fixedBackground, fuse;
+	private Image movingBackground, fixedBackground, fusePart;
+	private SpriteSheet fuse;
 	private Point bgPoint1, bgPoint2;
 	private static ScoresInfo scoresList;
 	private  Input input;
 	private Text text;
+	private float time;
 	
 	
 	
@@ -69,7 +72,7 @@ public class FirstState extends BasicGameState {
 			cursor = new Image("Content/ImageFiles/Cursor.png");
 			movingBackground = new Image("Content/ImageFiles/moving_background.png");
 			fixedBackground = new Image("Content/ImageFiles/Bricks2.png");
-			fuse = new Image("Content/ImageFiles/fuse.png");
+			fuse = new SpriteSheet("Content/ImageFiles/fuse.png",11, 50);
 			text = new Text();
 			
 			// retrieve the scores list and print it for debugging
@@ -138,7 +141,7 @@ public class FirstState extends BasicGameState {
 		
 		
 		//update Background
-		float time = CH.getTime().getTime();
+		time = CH.getTime().getTime();
 		int dTime = (int)(time > 3.0f ? time : 3);
 		int yShift = 60 / dTime;
 		bgPoint1.y += yShift;
@@ -164,9 +167,24 @@ public class FirstState extends BasicGameState {
 
 		//draw background
 		fixedBackground.draw(0, 0, WIDTH, HEIGHT);
-		movingBackground.draw(bgPoint1.x, bgPoint1.y,WIDTH, HEIGHT);
-		movingBackground.draw(bgPoint2.x, bgPoint2.y,WIDTH, HEIGHT);
-		fuse.draw(WIDTH*0.195f, HEIGHT*0.145f);
+		//movingBackground.draw(bgPoint1.x, bgPoint1.y,WIDTH, HEIGHT);
+		//movingBackground.draw(bgPoint2.x, bgPoint2.y,WIDTH, HEIGHT);
+		
+		Color color;
+		int partWidth;
+		
+		for (int i=0; i < time; i++) {
+			fusePart = fuse.getSprite(i, 0);
+			partWidth = fusePart.getWidth();
+			if (time < 5.0f)
+				color = Color.red;
+			else if (time < 10.0f)
+				color = Color.pink;
+			else
+				color = Color.white;
+			fusePart.draw(WIDTH*0.195f + i*partWidth, HEIGHT*0.145f, color);
+		}
+		
 		
 		
 
