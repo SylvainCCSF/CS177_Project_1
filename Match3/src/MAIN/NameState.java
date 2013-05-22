@@ -53,7 +53,7 @@ public class NameState extends BasicGameState {
 		WIDTH = _WIDTH;
 		HEIGHT = _HEIGHT;
 		try{
-		background = new Image("Content/ImageFiles/Bricks2.png");
+		background = new Image("Content/ImageFiles/name_state_background.png");
 		cursor = new Image("Content/ImageFiles/Cursor.png");
 		alphabet = new Image("Content/ImageFiles/fonts_trans.png");
 		}catch(SlickException e){}
@@ -175,12 +175,10 @@ public class NameState extends BasicGameState {
 		alphabet.draw(pad, pad, scale, Color.darkGray);
 		
 		// display the name
-		text.draw(name,  WIDTH * 0.15f, HEIGHT * 0.60f,  WIDTH * 0.12f,WIDTH * 0.12f, Color.black );
-		//text.draw(name,  WIDTH * 0.15f+2, HEIGHT * 0.60f+2,  WIDTH * 0.05f,WIDTH * 0.05f, Color.darkGray );
+		text.draw(name,  WIDTH * 0.15f, HEIGHT * 0.50f,  WIDTH * 0.12f,WIDTH * 0.12f, Color.black );
 		
 		// display message for enter
 		text.draw("press Enter to continue", WIDTH * 0.25f, HEIGHT * 0.90f,  WIDTH * 0.03f,WIDTH * 0.03f, Color.gray );
-		//text.draw("press Enter to continue", WIDTH * 0.15f+2, HEIGHT * 0.90f+2,  WIDTH * 0.03f,WIDTH * 0.03f, Color.black );
 		
 		//the Cursor, draw last!
 		cursor.draw(Mouse.getX(), HEIGHT-Mouse.getY());

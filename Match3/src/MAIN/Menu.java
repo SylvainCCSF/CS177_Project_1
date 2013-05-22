@@ -53,10 +53,10 @@ public class Menu extends BasicGameState {
 			
 		//set buttonX value
 		newGameButton.setX((int)(WIDTH/2)-newGameButton.getWidthCenter());
-		newGameButton.setY( (int)(HEIGHT*.55f));
+		newGameButton.setY( (int)(HEIGHT*.40f));
 		
 		exitButton.setX((int)(WIDTH/2)-exitButton.getWidthCenter());
-		exitButton.setY((int)(HEIGHT*.8f));
+		exitButton.setY((int)(HEIGHT*.65f));
 		
 		
        // initialize and launch the background music

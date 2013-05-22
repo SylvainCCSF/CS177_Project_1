@@ -72,7 +72,7 @@ public class FirstState extends BasicGameState {
 			cursor = new Image("Content/ImageFiles/Cursor.png");
 			movingBackground = new Image("Content/ImageFiles/moving_background.png");
 			fixedBackground = new Image("Content/ImageFiles/Bricks2.png");
-			fuse = new SpriteSheet("Content/ImageFiles/fuse.png",11, 50);
+			fuse = new SpriteSheet("Content/ImageFiles/fuse.png",1, 50);
 			text = new Text();
 			
 			// retrieve the scores list and print it for debugging
@@ -138,26 +138,8 @@ public class FirstState extends BasicGameState {
 			game.enterState(2, new FadeOutTransition(Color.red, 1000), new FadeInTransition(Color.red, 300) );
 		}
 		
-		
-		
-		//update Background
+		//update time for the fuse
 		time = CH.getTime().getTime();
-		int dTime = (int)(time > 3.0f ? time : 3);
-		int yShift = 60 / dTime;
-		bgPoint1.y += yShift;
-	    bgPoint2.y += yShift;
-		
-		if(bgPoint1.y > HEIGHT)
-		{
-			bgPoint1.x = bgPoint2.x;
-			bgPoint1.y = 0;
-		}
-		if(bgPoint2.y > 0)
-		{
-			bgPoint2.x = (int)((-0.5 + Math.random()) * WIDTH);
-			bgPoint2.y = -(int)HEIGHT;
-		}
-		
 	} 
 
 
@@ -167,21 +149,17 @@ public class FirstState extends BasicGameState {
 
 		//draw background
 		fixedBackground.draw(0, 0, WIDTH, HEIGHT);
-		//movingBackground.draw(bgPoint1.x, bgPoint1.y,WIDTH, HEIGHT);
-		//movingBackground.draw(bgPoint2.x, bgPoint2.y,WIDTH, HEIGHT);
 		
 		Color color;
 		int partWidth;
 		
-		for (int i=0; i < time; i++) {
+		for (int i=0; i < 330-time*11; i++) {
 			fusePart = fuse.getSprite(i, 0);
 			partWidth = fusePart.getWidth();
 			if (time < 5.0f)
 				color = Color.red;
-			else if (time < 10.0f)
-				color = Color.pink;
 			else
-				color = Color.white;
+				color = Color.gray;
 			fusePart.draw(WIDTH*0.195f + i*partWidth, HEIGHT*0.145f, color);
 		}
 		
