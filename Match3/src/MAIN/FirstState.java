@@ -39,9 +39,8 @@ public class FirstState extends BasicGameState {
 	private SoundTrack backgroundMusic;
 	private boolean startMusic = true;
 	private Image cursor;
-	private Image movingBackground, fixedBackground, fusePart;
+	private Image movingBackground, fixedBackground, fuseImageOriginal, fuseImageScaled, fusePart;
 	private SpriteSheet fuse;
-	private Point bgPoint1, bgPoint2;
 	private static ScoresInfo scoresList;
 	private  Input input;
 	private Text text;
@@ -72,7 +71,13 @@ public class FirstState extends BasicGameState {
 			cursor = new Image("Content/ImageFiles/Cursor.png");
 			movingBackground = new Image("Content/ImageFiles/moving_background.png");
 			fixedBackground = new Image("Content/ImageFiles/Bricks2.png");
-			fuse = new SpriteSheet("Content/ImageFiles/fuse.png",1, 50);
+			fuseImageOriginal = new Image("Content/ImageFiles/fuse.png");
+			fuseImageOriginal.setFilter(Image.FILTER_NEAREST);
+			int fuseWidth = fuseImageOriginal.getWidth();
+			float scale = (WIDTH * 0.61f) / fuseWidth;
+			fuseImageScaled = fuseImageOriginal.getScaledCopy(scale);
+			int fuseScaledHeight = fuseImageScaled.getHeight();
+			fuse = new SpriteSheet(fuseImageScaled, 1, fuseScaledHeight);
 			text = new Text();
 			
 			// retrieve the scores list and print it for debugging
@@ -81,9 +86,8 @@ public class FirstState extends BasicGameState {
 			System.out.println("scores:\n" + scoresList);
 			
 			}catch(SlickException e){}
-		    bgPoint1 = new Point(0,0);
-			bgPoint2 = new Point(0, -(int)HEIGHT);
-			CH.resetTimer();
+		    
+		   	CH.resetTimer();
 			startMusic = true;
 	} 
 
@@ -152,8 +156,10 @@ public class FirstState extends BasicGameState {
 		
 		Color color;
 		int partWidth;
+		int numOfSprites = fuseImageScaled.getWidth();
+		float initialAmountOfTime = CH.getPlayingTime();
 		
-		for (int i=0; i < 330-time*11; i++) {
+		for (int i = 0; i < numOfSprites * (initialAmountOfTime - time) / initialAmountOfTime - 1; i++) {
 			fusePart = fuse.getSprite(i, 0);
 			partWidth = fusePart.getWidth();
 			if (time < 5.0f)

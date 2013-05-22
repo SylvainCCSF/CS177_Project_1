@@ -512,4 +512,12 @@ public class CardHandler {
 	public Score getScoreObject() {
 		return score;
 	}
+	
+	/**
+	 * Returns the amount of seconds the user have to play
+	 * @return a float equal to the playing time
+	 */
+	public float getPlayingTime() {
+		return playingTime;
+	}
 }
