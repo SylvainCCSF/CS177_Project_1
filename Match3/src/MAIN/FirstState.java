@@ -38,7 +38,7 @@ public class FirstState extends BasicGameState {
 	private SoundTrack backgroundMusic;
 	private boolean startMusic = true;
 	private Image cursor;
-	private Image movingBackground, fixedBackground;
+	private Image movingBackground, fixedBackground, fuse;
 	private Point bgPoint1, bgPoint2;
 	private static ScoresInfo scoresList;
 	private  Input input;
@@ -69,6 +69,7 @@ public class FirstState extends BasicGameState {
 			cursor = new Image("Content/ImageFiles/Cursor.png");
 			movingBackground = new Image("Content/ImageFiles/moving_background.png");
 			fixedBackground = new Image("Content/ImageFiles/Bricks2.png");
+			fuse = new Image("Content/ImageFiles/fuse.png");
 			text = new Text();
 			
 			// retrieve the scores list and print it for debugging
@@ -165,6 +166,7 @@ public class FirstState extends BasicGameState {
 		fixedBackground.draw(0, 0, WIDTH, HEIGHT);
 		movingBackground.draw(bgPoint1.x, bgPoint1.y,WIDTH, HEIGHT);
 		movingBackground.draw(bgPoint2.x, bgPoint2.y,WIDTH, HEIGHT);
+		fuse.draw(WIDTH*0.195f, HEIGHT*0.145f);
 		
 		
 

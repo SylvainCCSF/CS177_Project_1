@@ -100,8 +100,7 @@ public class CardHandler {
 		
 		//scale the image
 		imageScale =  (APPLET_WIDTH * 0.08f) / images[0].getWidth();  
-		// initialize the playing time and launch the countdown
-	    
+		
 		//create a new score
 		score = new Score("player 1"); // player 1 = default player
 	}
